@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile & Account | Ahaaram Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="section-eyebrow">Guest Portal</span>
+          <h1 style="font-size: 2.2rem;">Welcome, {{ user.name }}</h1>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="{{ url_for('orders') }}" class="btn btn-secondary btn-sm">All Orders</a>
+          <a href="{{ url_for('my_reservations') }}" class="btn btn-secondary btn-sm">All Bookings</a>
+          {% if user.is_admin %}
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary btn-sm">★ Admin Dashboard</a>
+          {% endif %}
+          <a href="{{ url_for('logout') }}" class="btn btn-sm" style="background: #ffebee; color: #c62828;">Sign Out</a>
+        </div>
+      </div>
+
+      <!-- Overview Stats -->
+      <div class="stats-grid" style="margin-bottom: 32px;">
+        <div class="stat-card">
+          <div class="stat-label">Past Orders</div>
+          <div class="stat-val" style="color: var(--color-gold);">{{ recent_orders|length }}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Table Reservations</div>
+          <div class="stat-val">{{ reservations|length }}</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Saved Favourites</div>
+          <div class="stat-val">{{ favorites|length }}</div>
+        </div>
+      </div>
+
+      <div class="cart-layout">
+        <!-- Left: Personal Details & Saved Favorites -->
+        <div>
+          <!-- Personal Profile Details -->
+          <div class="form-card" style="margin-bottom: 24px;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 16px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              Personal Details
+            </h3>
+
+            <div style="font-size: 0.95rem; line-height: 1.8; color: var(--color-text-main);">
+              <p><strong>Full Name:</strong> {{ user.name }}</p>
+              <p><strong>Email Address:</strong> {{ user.email }}</p>
+              <p><strong>Phone Number:</strong> {{ user.phone or 'Not provided' }}</p>
+              <p><strong>Account Type:</strong> {% if user.is_admin %}<span style="color: var(--color-gold); font-weight: 700;">Staff Administrator</span>{% else %}Diner / Guest{% endif %}</p>
+              <p><strong>Member Since:</strong> {{ user.created_at }}</p>
+            </div>
+          </div>
+
+          <!-- Saved Favorites List -->
+          <div class="form-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              <h3 style="font-size: 1.3rem;">Saved Favourites</h3>
+              <a href="{{ url_for('menu') }}" style="font-size: 0.85rem; color: var(--color-gold); font-weight: 600;">+ Browse Menu</a>
+            </div>
+
+            {% if favorites %}
+              <div style="display: flex; flex-direction: column; gap: 14px;">
+                {% for fav in favorites %}
+                  <div style="display: flex; align-items: center; justify-content: space-between; padding-bottom: 12px; border-bottom: 1px solid var(--color-cream-border); gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 12px;">
+                      <img src="{{ fav.image }}" alt="{{ fav.name }}" style="width: 48px; height: 48px; border-radius: 6px; object-fit: cover;">
+                      <div>
+                        <a href="{{ url_for('food_details', id=fav.id) }}" style="font-weight: 600; font-size: 0.95rem; color: var(--color-charcoal);">
+                          {{ fav.name }}
+                        </a>
+                        <div style="font-size: 0.85rem; color: var(--color-gold); font-weight: 600;">₹{{ "%.2f"|format(fav.price) }}</div>
+                      </div>
+                    </div>
+
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                      <button type="button" class="btn btn-secondary btn-sm" onclick="addToCart({{ fav.id }})" style="padding: 5px 10px; font-size: 0.78rem;">
+                        + Cart
+                      </button>
+                      <button type="button" class="food-fav-btn active" style="position: static; width: 32px; height: 32px; font-size: 0.9rem;" onclick="toggleFavorite({{ fav.id }}, this)" title="Remove Favorite">
+                        ♥
+                      </button>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p style="color: var(--color-text-muted); font-size: 0.9rem;">
+                You haven't bookmarked any favorite dishes yet. Click the heart icon on any menu item to save it here.
+              </p>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Right: Recent Activity -->
+        <div>
+          <!-- Recent Orders -->
+          <div class="form-card" style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              <h3 style="font-size: 1.3rem;">Recent Orders</h3>
+              <a href="{{ url_for('orders') }}" style="font-size: 0.85rem; color: var(--color-gold); font-weight: 600;">View All →</a>
+            </div>
+
+            {% if recent_orders %}
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                {% for ord in recent_orders %}
+                  <div style="padding: 12px; background: var(--color-cream); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                      <strong style="font-size: 0.9rem; display: block;">{{ ord.order_number }}</strong>
+                      <span style="font-size: 0.78rem; color: var(--color-text-muted);">{{ ord.created_at }}</span>
+                    </div>
+                    <div style="text-align: right;">
+                      <span class="status-badge status-{{ ord.status|lower }}" style="margin-bottom: 4px; display: inline-block;">{{ ord.status }}</span>
+                      <div style="font-size: 0.9rem; font-weight: 700; color: var(--color-gold);">₹{{ "%.2f"|format(ord.grand_total) }}</div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p style="color: var(--color-text-muted); font-size: 0.9rem;">No orders placed yet.</p>
+              <a href="{{ url_for('menu') }}" class="btn btn-primary btn-sm" style="margin-top: 10px;">Order Food</a>
+            {% endif %}
+          </div>
+
+          <!-- Upcoming Reservations -->
+          <div class="form-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              <h3 style="font-size: 1.3rem;">Table Bookings</h3>
+              <a href="{{ url_for('my_reservations') }}" style="font-size: 0.85rem; color: var(--color-gold); font-weight: 600;">View All →</a>
+            </div>
+
+            {% if reservations %}
+              <div style="display: flex; flex-direction: column; gap: 12px;">
+                {% for res in reservations %}
+                  <div style="padding: 12px; background: var(--color-cream); border-radius: var(--radius-sm); display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                      <strong style="font-size: 0.9rem; display: block;">{{ res.reservation_code }}</strong>
+                      <span style="font-size: 0.78rem; color: var(--color-text-muted);">{{ res.date }} at {{ res.time }} ({{ res.guests }} Guests)</span>
+                    </div>
+                    <div>
+                      <span class="status-badge status-{{ res.status|lower }}">{{ res.status }}</span>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            {% else %}
+              <p style="color: var(--color-text-muted); font-size: 0.9rem;">No table reservations scheduled.</p>
+              <a href="{{ url_for('reservation') }}" class="btn btn-secondary btn-sm" style="margin-top: 10px;">Reserve a Table</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

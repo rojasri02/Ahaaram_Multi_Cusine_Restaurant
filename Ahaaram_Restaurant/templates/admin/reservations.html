@@ -1,0 +1,83 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Manage Reservations | Ahaaram Admin{% endblock %}
+
+{% block admin_content %}
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="section-eyebrow">Table Bookings & Seating</span>
+      <h1 style="font-size: 2rem;">Reservations Log ({{ reservations|length }})</h1>
+    </div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <a href="{{ url_for('admin_reservations') }}" class="btn btn-sm {% if not selected_status %}btn-primary{% else %}btn-secondary{% endif %}">All</a>
+      <a href="{{ url_for('admin_reservations', status='Pending') }}" class="btn btn-sm {% if selected_status == 'Pending' %}btn-primary{% else %}btn-secondary{% endif %}">Pending</a>
+      <a href="{{ url_for('admin_reservations', status='Confirmed') }}" class="btn btn-sm {% if selected_status == 'Confirmed' %}btn-primary{% else %}btn-secondary{% endif %}">Confirmed</a>
+      <a href="{{ url_for('admin_reservations', status='Completed') }}" class="btn btn-sm {% if selected_status == 'Completed' %}btn-primary{% else %}btn-secondary{% endif %}">Completed</a>
+      <a href="{{ url_for('admin_reservations', status='Cancelled') }}" class="btn btn-sm {% if selected_status == 'Cancelled' %}btn-primary{% else %}btn-secondary{% endif %}">Cancelled</a>
+    </div>
+  </div>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Booking Ref</th>
+          <th>Guest Details</th>
+          <th>Date & Slot</th>
+          <th>Party</th>
+          <th>Special Notes</th>
+          <th>Status</th>
+          <th>Update Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if reservations %}
+          {% for res in reservations %}
+            <tr>
+              <td><strong>{{ res.reservation_code }}</strong></td>
+              <td>
+                <div style="font-weight: 600;">{{ res.name }}</div>
+                <div style="font-size: 0.8rem; color: var(--color-text-muted);">{{ res.phone }}</div>
+                {% if res.email %}
+                  <div style="font-size: 0.78rem; color: var(--color-gold);">{{ res.email }}</div>
+                {% endif %}
+              </td>
+              <td>
+                <div style="font-weight: 600;">{{ res.date }}</div>
+                <div style="font-size: 0.82rem; color: var(--color-gold);">{{ res.time }}</div>
+              </td>
+              <td><strong>{{ res.guests }}</strong> Guests</td>
+              <td>
+                {% if res.special_requests %}
+                  <div style="font-size: 0.82rem; color: var(--color-text-muted); max-width: 220px; font-style: italic;">
+                    "{{ res.special_requests }}"
+                  </div>
+                {% else %}
+                  <span style="font-size: 0.8rem; color: var(--color-text-muted);">Standard table</span>
+                {% endif %}
+              </td>
+              <td>
+                <span class="status-badge status-{{ res.status|lower }}">{{ res.status }}</span>
+              </td>
+              <td>
+                <form method="POST" action="{{ url_for('admin_update_reservation_status', id=res.id) }}" style="display: flex; gap: 6px;">
+                  <select name="status" class="form-control" style="padding: 5px 8px; font-size: 0.8rem; width: auto;">
+                    <option value="Pending" {% if res.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Confirmed" {% if res.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                    <option value="Completed" {% if res.status == 'Completed' %}selected{% endif %}>Completed</option>
+                    <option value="Cancelled" {% if res.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                  </select>
+                  <button type="submit" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;">Save</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 30px; color: var(--color-text-muted);">No table reservations recorded yet.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

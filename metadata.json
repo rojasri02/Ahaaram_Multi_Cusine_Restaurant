@@ -1,0 +1,6 @@
+{
+  "name": "Ahaaram Multi Cuisine Restaurant",
+  "description": "Premium multi-cuisine restaurant platform in Madurai with online ordering, table reservations, interactive menu, and admin management.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

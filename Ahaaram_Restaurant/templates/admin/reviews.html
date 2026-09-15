@@ -1,0 +1,58 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Manage Reviews | Ahaaram Admin{% endblock %}
+
+{% block admin_content %}
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="section-eyebrow">Guest Testimonials</span>
+      <h1 style="font-size: 2rem;">Reviews & Feedback ({{ reviews|length }})</h1>
+    </div>
+  </div>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Diner Name</th>
+          <th>Rating</th>
+          <th>Review Content</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if reviews %}
+          {% for rev in reviews %}
+            <tr>
+              <td><strong>#{{ rev.id }}</strong></td>
+              <td><strong>{{ rev.customer_name }}</strong></td>
+              <td>
+                <span style="color: var(--color-gold); font-size: 1.05rem;">
+                  {% for i in range(rev.rating) %}★{% endfor %}
+                </span>
+                <span style="font-size: 0.8rem; color: var(--color-text-muted);">({{ rev.rating }}/5)</span>
+              </td>
+              <td style="max-width: 400px; font-style: italic;">
+                "{{ rev.review }}"
+              </td>
+              <td style="font-size: 0.82rem; color: var(--color-text-muted);">{{ rev.created_at }}</td>
+              <td>
+                <form method="POST" action="{{ url_for('admin_delete_review', id=rev.id) }}" onsubmit="return confirm('Delete this review?');" style="display: inline;">
+                  <button type="submit" class="btn btn-secondary btn-sm" style="color: #c62828; border-color: #ef9a9a; padding: 4px 10px; font-size: 0.78rem;">
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="6" style="text-align: center; padding: 30px; color: var(--color-text-muted);">No reviews submitted yet.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}About Us | Where Madurai Meets the World | Ahaaram Restaurant{% endblock %}
+
+{% block content %}
+  <!-- Page Header -->
+  <section class="section section-dark" style="padding: 70px 0; text-align: center;">
+    <div class="container">
+      <span class="section-eyebrow" style="color: var(--color-gold);">Our Heritage</span>
+      <h1 class="section-title" style="color: #fff; margin-bottom: 12px;">Where Madurai Meets the World</h1>
+      <p style="max-width: 680px; margin: 0 auto; color: #cfcac4; font-size: 1.1rem;">
+        An inviting table for every taste, crafted with timeless South Indian warmth and international culinary finesse.
+      </p>
+    </div>
+  </section>
+
+  <!-- Story & Philosophy -->
+  <section class="section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="fade-in-up">
+          <span class="section-eyebrow">Culinary Philosophy</span>
+          <h2 class="section-title">The Spirit of Ahaaram</h2>
+          <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 16px; color: var(--color-text-main);">
+            "Ahaaram" is the ancient Sanskrit term for wholesome nourishment that sustains body, mind, and spirit. Located on <strong>Madakulam Main Road</strong> in the ancient temple city of Madurai, our restaurant was founded on a simple, generous principle: that true hospitality begins with an open door and an inviting table.
+          </p>
+          <p style="line-height: 1.6; margin-bottom: 16px; color: var(--color-text-muted);">
+            In association with <strong>Regency Madurai by GRT Hotels</strong>, Ahaaram honours both centuries-old Tamil culinary traditions and contemporary global appetites. Madurai is renowned across India for its distinctive spice mastery — stone-ground peppercorns, roasted coriander, fragrant Seeraga Samba rice, and slow-braised meats.
+          </p>
+          <p style="line-height: 1.6; margin-bottom: 24px; color: var(--color-text-muted);">
+            Here, you can celebrate the city's legendary <em>Madurai Kari Dosa</em> and <em>Bun Parotta</em> alongside delicate wild mushroom risottos, wok-tossed Schezwan jumbo prawns, and clay-oven butter chicken.
+          </p>
+          <div style="display: flex; gap: 16px;">
+            <a href="{{ url_for('menu') }}" class="btn btn-primary">Explore Our Menu</a>
+            <a href="{{ url_for('reservation') }}" class="btn btn-secondary">Reserve a Table</a>
+          </div>
+        </div>
+
+        <div class="story-img-collage fade-in-up">
+          <div class="story-img-main">
+            <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Ahaaram Dining Atmosphere">
+          </div>
+          <div class="story-img-secondary">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80" alt="Table Details">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Multi-Cuisine Pillars -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <span class="section-eyebrow">Our Dining Pillars</span>
+        <h2 class="section-title">Designed for Every Palate</h2>
+        <p class="section-subtitle">
+          Thoughtfully separated vegetarian and non-vegetarian preparation areas ensure respectful culinary integrity across all cuisines.
+        </p>
+      </div>
+
+      <div class="category-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));">
+        <div class="category-card fade-in-up">
+          <div class="category-img-wrap">
+            <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80" alt="South Indian Delicacies">
+          </div>
+          <div class="category-body">
+            <h3 class="category-name">South Indian Heritage</h3>
+            <p class="category-desc">Freshly ground Chettinad masalas, crispy dosas, and slow-dum biryanis honouring Tamil Nadu's vibrant culinary culture.</p>
+          </div>
+        </div>
+
+        <div class="category-card fade-in-up">
+          <div class="category-img-wrap">
+            <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=600&q=80" alt="North Indian Tandoor">
+          </div>
+          <div class="category-body">
+            <h3 class="category-name">North Indian Tandoor</h3>
+            <p class="category-desc">Rich tomato satin gravies, smoldering clay tandoor kebabs, slow-cooked lentils, and soft artisan flatbreads.</p>
+          </div>
+        </div>
+
+        <div class="category-card fade-in-up">
+          <div class="category-img-wrap">
+            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80" alt="Asian Wok Artistry">
+          </div>
+          <div class="category-body">
+            <h3 class="category-name">Asian Wok Artistry</h3>
+            <p class="category-desc">Crisp vegetables, aromatic Thai green curries, and high-heat wok noodles packed with garlic and fresh herbs.</p>
+          </div>
+        </div>
+
+        <div class="category-card fade-in-up">
+          <div class="category-img-wrap">
+            <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=600&q=80" alt="Continental Elegance">
+          </div>
+          <div class="category-body">
+            <h3 class="category-name">Continental Elegance</h3>
+            <p class="category-desc">Herb-seared salmon, fresh hand-rolled pasta, rich mushroom risottos, and crisp salads for light dining.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hospitality & Standards -->
+  <section class="section">
+    <div class="container container-narrow" style="text-align: center;">
+      <span class="section-eyebrow">Warm Hospitality</span>
+      <h2 class="section-title">Comfortable Dining in Madurai</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: var(--color-text-main); margin-bottom: 28px;">
+        Whether you are a hotel resident at Regency Madurai or a local resident celebrating an anniversary, our staff is dedicated to ensuring your time with us is restful and delicious. With spacious seating, climate-controlled comfort, dedicated valet service, and private banquet options, we look forward to welcoming you.
+      </p>
+      <a href="{{ url_for('reservation') }}" class="btn btn-primary btn-lg">Book Your Table Today</a>
+    </div>
+  </section>
+{% endblock %}

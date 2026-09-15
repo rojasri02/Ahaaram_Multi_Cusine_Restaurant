@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Multi Cuisine Menu | Ahaaram Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <!-- Header -->
+  <section class="section section-dark" style="padding: 60px 0; text-align: center;">
+    <div class="container">
+      <span class="section-eyebrow" style="color: var(--color-gold);">Freshly Prepared Dishes</span>
+      <h1 class="section-title" style="color: #fff; margin-bottom: 10px;">Our Multi Cuisine Menu</h1>
+      <p style="color: #c9c4be; max-width: 600px; margin: 0 auto; font-size: 1.05rem;">
+        Discover approximately 50 regional and international creations, made to order using fresh local and gourmet ingredients.
+      </p>
+    </div>
+  </section>
+
+  <!-- Menu Filters & Search Box -->
+  <section class="section" style="padding-top: 40px;" id="order">
+    <div class="container">
+      <div class="menu-controls-box">
+        <form method="GET" action="{{ url_for('menu') }}" id="menu-filter-form">
+          <!-- Search Row -->
+          <div class="menu-search-row">
+            <div class="search-input-wrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" 
+                     name="search" 
+                     placeholder="Search dishes (e.g., Kari Dosa, Biryani, Butter Chicken, Salmon)..." 
+                     value="{{ search_query }}"
+                     id="menu-search-input">
+            </div>
+
+            <!-- Sort By Dropdown -->
+            <div>
+              <select name="sort" class="sort-select" onchange="this.form.submit()" id="sort-select">
+                <option value="featured" {% if selected_sort == 'featured' %}selected{% endif %}>Featured First</option>
+                <option value="popular" {% if selected_sort == 'popular' %}selected{% endif %}>Most Popular</option>
+                <option value="price_asc" {% if selected_sort == 'price_asc' %}selected{% endif %}>Price: Low → High</option>
+                <option value="price_desc" {% if selected_sort == 'price_desc' %}selected{% endif %}>Price: High → Low</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+            {% if search_query or selected_category or selected_diet %}
+              <a href="{{ url_for('menu') }}" class="btn btn-secondary btn-sm">Reset Filters</a>
+            {% endif %}
+          </div>
+
+          <!-- Diet (Veg / Non-Veg) Filters -->
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px;">
+            <div class="filter-pills">
+              <span style="font-weight: 600; font-size: 0.85rem; color: var(--color-charcoal); margin-right: 6px;">Diet:</span>
+              <a href="{{ url_for('menu', category=selected_category, sort=selected_sort, search=search_query) }}" 
+                 class="filter-pill {% if not selected_diet %}active{% endif %}">
+                All Dishes
+              </a>
+              <a href="{{ url_for('menu', category=selected_category, diet='veg', sort=selected_sort, search=search_query) }}" 
+                 class="filter-pill {% if selected_diet == 'veg' %}active{% endif %}" style="display: inline-flex; align-items: center; gap: 6px;">
+                <span class="food-diet-badge veg" style="position: static; width: 14px; height: 14px; display: inline-flex;"></span>
+                Pure Vegetarian
+              </a>
+              <a href="{{ url_for('menu', category=selected_category, diet='nonveg', sort=selected_sort, search=search_query) }}" 
+                 class="filter-pill {% if selected_diet == 'nonveg' %}active{% endif %}" style="display: inline-flex; align-items: center; gap: 6px;">
+                <span class="food-diet-badge nonveg" style="position: static; width: 14px; height: 14px; display: inline-flex;"></span>
+                Non-Vegetarian
+              </a>
+            </div>
+
+            <div style="font-size: 0.88rem; color: var(--color-text-muted);">
+              Showing <strong>{{ total_items }}</strong> dishes
+            </div>
+          </div>
+
+          <!-- Cuisine Category Pills -->
+          <div class="filter-pills">
+            <span style="font-weight: 600; font-size: 0.85rem; color: var(--color-charcoal); margin-right: 6px;">Categories:</span>
+            <a href="{{ url_for('menu', diet=selected_diet, sort=selected_sort, search=search_query) }}" 
+               class="filter-pill gold {% if not selected_category %}active{% endif %}">
+              All Categories
+            </a>
+            {% for cat in categories %}
+              <a href="{{ url_for('menu', category=cat.slug, diet=selected_diet, sort=selected_sort, search=search_query) }}" 
+                 class="filter-pill gold {% if selected_category == cat.slug %}active{% endif %}">
+                {{ cat.name }}
+              </a>
+            {% endfor %}
+          </div>
+        </form>
+      </div>
+
+      <!-- Food Grid -->
+      {% if foods %}
+        <div class="food-grid">
+          {% for food in foods %}
+            <div class="food-card" id="food-card-{{ food.id }}">
+              <div class="food-card-img-wrap">
+                <img src="{{ food.image }}" alt="{{ food.name }}" loading="lazy">
+                <span class="food-diet-badge {{ food.veg_or_nonveg }}" title="{{ food.veg_or_nonveg|capitalize }}"></span>
+                
+                <!-- Favorite button -->
+                <button class="food-fav-btn {% if food.id in user_fav_ids %}active{% endif %}" 
+                        onclick="toggleFavorite({{ food.id }}, this)" 
+                        title="{% if food.id in user_fav_ids %}Favorited{% else %}Save to favorites{% endif %}">
+                  {% if food.id in user_fav_ids %}♥{% else %}♡{% endif %}
+                </button>
+              </div>
+
+              <div class="food-card-body">
+                <span class="food-category-tag">{{ food.category }}</span>
+                <h3 class="food-card-title">
+                  <a href="{{ url_for('food_details', id=food.id) }}">{{ food.name }}</a>
+                </h3>
+                <p class="food-card-desc">{{ food.description }}</p>
+
+                <div class="food-card-footer">
+                  <span class="food-price">₹{{ "%.2f"|format(food.price) }}</span>
+                  <div class="food-actions">
+                    <a href="{{ url_for('food_details', id=food.id) }}" class="btn btn-secondary btn-sm" style="padding: 7px 10px;">Details</a>
+                    {% if food.availability == 1 %}
+                      <button class="add-cart-btn" onclick="addToCart({{ food.id }})">
+                        <span>+ Add</span>
+                      </button>
+                    {% else %}
+                      <span style="font-size: 0.78rem; color: #999; font-weight: 600;">Sold Out</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div style="text-align: center; padding: 70px 20px; background: #fff; border-radius: var(--radius-md); border: 1px solid var(--color-cream-border);">
+          <h3 style="font-size: 1.6rem; margin-bottom: 12px;">No Dishes Found</h3>
+          <p style="color: var(--color-text-muted); margin-bottom: 24px;">
+            We couldn't find any dishes matching your search or filters.
+          </p>
+          <a href="{{ url_for('menu') }}" class="btn btn-primary">Reset All Filters</a>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

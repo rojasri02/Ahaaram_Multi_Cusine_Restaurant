@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="admin-layout">
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar">
+      <div style="padding: 0 24px 20px 24px; border-bottom: 1px solid var(--color-charcoal-border); margin-bottom: 16px;">
+        <span style="font-size: 0.72rem; color: var(--color-gold); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700;">Management Console</span>
+        <h3 style="color: #fff; font-size: 1.25rem; margin-top: 4px;">Ahaaram Admin</h3>
+      </div>
+
+      <ul class="admin-sidebar-menu">
+        <li>
+          <a href="{{ url_for('admin_dashboard') }}" class="admin-sidebar-link {% if request.endpoint == 'admin_dashboard' %}active{% endif %}">
+            <span>📊</span> Dashboard Overview
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_foods') }}" class="admin-sidebar-link {% if 'food' in request.endpoint %}active{% endif %}">
+            <span>🍽️</span> Food Items (Menu)
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_orders') }}" class="admin-sidebar-link {% if request.endpoint == 'admin_orders' %}active{% endif %}">
+            <span>📦</span> Order Management
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_reservations') }}" class="admin-sidebar-link {% if request.endpoint == 'admin_reservations' %}active{% endif %}">
+            <span>🗓️</span> Table Reservations
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_customers') }}" class="admin-sidebar-link {% if request.endpoint == 'admin_customers' %}active{% endif %}">
+            <span>👥</span> Customer Directory
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('admin_reviews') }}" class="admin-sidebar-link {% if request.endpoint == 'admin_reviews' %}active{% endif %}">
+            <span>⭐</span> Reviews & Moderation
+          </a>
+        </li>
+        <li style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--color-charcoal-border);">
+          <a href="{{ url_for('index') }}" class="admin-sidebar-link" target="_blank">
+            <span>🌐</span> View Public Site ↗
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('logout') }}" class="admin-sidebar-link" style="color: #ef9a9a;">
+            <span>🚪</span> Sign Out Admin
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Admin Main Body -->
+    <main class="admin-main">
+      {% block admin_content %}{% endblock %}
+    </main>
+  </div>
+{% endblock %}

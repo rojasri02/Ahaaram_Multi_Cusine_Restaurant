@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}My Table Reservations | Ahaaram Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="section-eyebrow">Dining Schedule</span>
+          <h1 style="font-size: 2.2rem;">Your Table Reservations</h1>
+        </div>
+        <a href="{{ url_for('reservation') }}" class="btn btn-primary btn-sm">+ Book Another Table</a>
+      </div>
+
+      {% if reservations %}
+        <div class="data-table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Booking Ref</th>
+                <th>Guest</th>
+                <th>Date & Time</th>
+                <th>Party Size</th>
+                <th>Special Notes</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for res in reservations %}
+                <tr>
+                  <td><strong>{{ res.reservation_code }}</strong></td>
+                  <td>
+                    <div><strong>{{ res.name }}</strong></div>
+                    <div style="font-size: 0.8rem; color: var(--color-text-muted);">{{ res.phone }}</div>
+                  </td>
+                  <td>
+                    <div><strong>{{ res.date }}</strong></div>
+                    <div style="font-size: 0.82rem; color: var(--color-gold);">{{ res.time }}</div>
+                  </td>
+                  <td><strong>{{ res.guests }}</strong> Guests</td>
+                  <td style="font-size: 0.82rem; color: var(--color-text-muted); max-width: 200px;">
+                    {{ res.special_requests or 'Standard table seating' }}
+                  </td>
+                  <td>
+                    <span class="status-badge status-{{ res.status|lower }}">{{ res.status }}</span>
+                  </td>
+                  <td>
+                    {% if res.status in ['Pending', 'Confirmed', 'pending', 'confirmed'] %}
+                      <form method="POST" action="{{ url_for('cancel_reservation', id=res.id) }}" onsubmit="return confirm('Are you sure you want to cancel this table booking?');" style="display: inline;">
+                        <button type="submit" class="btn btn-secondary btn-sm" style="color: #c62828; border-color: #ef9a9a; padding: 4px 10px; font-size: 0.75rem;">
+                          Cancel Booking
+                        </button>
+                      </form>
+                    {% else %}
+                      <span style="font-size: 0.82rem; color: var(--color-text-muted);">—</span>
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="form-card" style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 3rem; margin-bottom: 16px;">🗓️</div>
+          <h2 style="font-size: 1.6rem; margin-bottom: 10px;">No Active Reservations</h2>
+          <p style="color: var(--color-text-muted); max-width: 440px; margin: 0 auto 24px auto;">
+            You have not booked any tables yet. Reserve your table in advance for seamless seating at Ahaaram.
+          </p>
+          <a href="{{ url_for('reservation') }}" class="btn btn-primary">Book a Table Now</a>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

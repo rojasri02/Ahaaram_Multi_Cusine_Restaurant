@@ -1,0 +1,162 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Admin Dashboard | Ahaaram Multi Cuisine Restaurant{% endblock %}
+
+{% block admin_content %}
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="section-eyebrow">Real-Time Operations</span>
+      <h1 style="font-size: 2rem;">Executive Dashboard</h1>
+    </div>
+    <div style="display: flex; gap: 12px;">
+      <a href="{{ url_for('admin_add_food') }}" class="btn btn-primary btn-sm">+ Add New Dish</a>
+      <a href="{{ url_for('admin_orders') }}" class="btn btn-secondary btn-sm">All Orders</a>
+    </div>
+  </div>
+
+  <!-- KPI Stats Grid -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Total Revenue</div>
+      <div class="stat-val" style="color: var(--color-gold);">₹{{ "%.2f"|format(stats.total_revenue) }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Total Orders</div>
+      <div class="stat-val">{{ stats.total_orders }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pending Orders</div>
+      <div class="stat-val" style="color: #e65100;">{{ stats.pending_orders }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Table Bookings</div>
+      <div class="stat-val">{{ stats.total_reservations }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Customers</div>
+      <div class="stat-val">{{ stats.total_customers }}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Menu Items</div>
+      <div class="stat-val">{{ stats.total_foods }}</div>
+    </div>
+  </div>
+
+  <!-- Recent Orders Section -->
+  <div style="margin-bottom: 40px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 style="font-size: 1.3rem;">Recent Orders</h3>
+      <a href="{{ url_for('admin_orders') }}" style="color: var(--color-gold); font-size: 0.88rem; font-weight: 600;">View All Orders →</a>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Order Ref</th>
+            <th>Customer</th>
+            <th>Total Amount</th>
+            <th>Type</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Update Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if recent_orders %}
+            {% for order in recent_orders %}
+              <tr>
+                <td><strong>{{ order.order_number }}</strong></td>
+                <td>
+                  <div><strong>{{ order.customer_name }}</strong></div>
+                  <div style="font-size: 0.8rem; color: var(--color-text-muted);">{{ order.customer_phone }}</div>
+                </td>
+                <td><strong>₹{{ "%.2f"|format(order.grand_total) }}</strong></td>
+                <td><span style="text-transform: capitalize;">{{ order.dining_type }}</span></td>
+                <td>{{ order.payment_method }}</td>
+                <td><span class="status-badge status-{{ order.status|lower }}">{{ order.status }}</span></td>
+                <td style="font-size: 0.82rem; color: var(--color-text-muted);">{{ order.created_at }}</td>
+                <td>
+                  <form method="POST" action="{{ url_for('admin_update_order_status', id=order.id) }}" style="display: flex; gap: 6px;">
+                    <select name="status" class="form-control" style="padding: 4px 8px; font-size: 0.8rem; width: auto;">
+                      <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                      <option value="Preparing" {% if order.status == 'Preparing' %}selected{% endif %}>Preparing</option>
+                      <option value="Ready" {% if order.status == 'Ready' %}selected{% endif %}>Ready</option>
+                      <option value="Completed" {% if order.status == 'Completed' %}selected{% endif %}>Completed</option>
+                      <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                    </select>
+                    <button type="submit" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;">Save</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="8" style="text-align: center; padding: 24px; color: var(--color-text-muted);">No orders placed yet.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Recent Table Reservations -->
+  <div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <h3 style="font-size: 1.3rem;">Upcoming Table Reservations</h3>
+      <a href="{{ url_for('admin_reservations') }}" style="color: var(--color-gold); font-size: 0.88rem; font-weight: 600;">View All Reservations →</a>
+    </div>
+
+    <div class="data-table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Guest</th>
+            <th>Date & Time</th>
+            <th>Party</th>
+            <th>Requests</th>
+            <th>Status</th>
+            <th>Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if recent_reservations %}
+            {% for res in recent_reservations %}
+              <tr>
+                <td><strong>{{ res.reservation_code }}</strong></td>
+                <td>
+                  <div><strong>{{ res.name }}</strong></div>
+                  <div style="font-size: 0.8rem; color: var(--color-text-muted);">{{ res.phone }}</div>
+                </td>
+                <td>
+                  <div><strong>{{ res.date }}</strong></div>
+                  <div style="font-size: 0.82rem; color: var(--color-gold);">{{ res.time }}</div>
+                </td>
+                <td>{{ res.guests }} Guests</td>
+                <td style="font-size: 0.8rem; color: var(--color-text-muted); max-width: 180px;">{{ res.special_requests or 'Standard table' }}</td>
+                <td><span class="status-badge status-{{ res.status|lower }}">{{ res.status }}</span></td>
+                <td>
+                  <form method="POST" action="{{ url_for('admin_update_reservation_status', id=res.id) }}" style="display: flex; gap: 6px;">
+                    <select name="status" class="form-control" style="padding: 4px 8px; font-size: 0.8rem; width: auto;">
+                      <option value="Pending" {% if res.status == 'Pending' %}selected{% endif %}>Pending</option>
+                      <option value="Confirmed" {% if res.status == 'Confirmed' %}selected{% endif %}>Confirmed</option>
+                      <option value="Completed" {% if res.status == 'Completed' %}selected{% endif %}>Completed</option>
+                      <option value="Cancelled" {% if res.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                    </select>
+                    <button type="submit" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;">Save</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          {% else %}
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 24px; color: var(--color-text-muted);">No reservations registered yet.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

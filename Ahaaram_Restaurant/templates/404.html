@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Page Not Found | Ahaaram Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section" style="padding: 100px 0; text-align: center;">
+    <div class="container container-narrow">
+      <div class="form-card" style="padding: 60px 20px;">
+        <span class="section-eyebrow">Error 404</span>
+        <h1 style="font-size: 3rem; margin-bottom: 14px;">A Table That Does Not Exist</h1>
+        <p style="color: var(--color-text-muted); font-size: 1.1rem; max-width: 520px; margin: 0 auto 30px auto;">
+          The page or dish you are looking for has either been relocated or is no longer available.
+        </p>
+        <div style="display: flex; gap: 16px; justify-content: center;">
+          <a href="{{ url_for('index') }}" class="btn btn-primary">Return to Home</a>
+          <a href="{{ url_for('menu') }}" class="btn btn-secondary">Explore Menu</a>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}Ahaaram Multi Cuisine Restaurant | Madakulam, Madurai{% endblock %}
+
+{% block content %}
+  <!-- Full-Screen Hero Section -->
+  <section class="hero-section" id="hero">
+    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=85" 
+         alt="Ahaaram Restaurant Dining Hall" 
+         class="hero-bg">
+    <div class="hero-overlay"></div>
+    
+    <div class="container hero-content">
+      <span class="hero-badge">Regency Madurai by GRT Hotels</span>
+      <h1 class="hero-title">AHAARAM</h1>
+      <p class="hero-quote">"An inviting table for every taste."</p>
+      <p class="hero-text">
+        Discover thoughtfully prepared flavours and warm hospitality in Madurai. An exquisite symphony of South Indian heritage, North Indian clay-oven craft, Asian wok delicacies, and refined Continental classics.
+      </p>
+      <div class="hero-buttons">
+        <a href="{{ url_for('menu') }}" class="btn btn-primary btn-lg" id="hero-menu-btn">Explore Menu</a>
+        <a href="{{ url_for('reservation') }}" class="btn btn-secondary btn-lg" style="color: #fff; border-color: #fff;" id="hero-reserve-btn">Reserve a Table</a>
+        <a href="{{ url_for('menu') }}#order" class="btn btn-outline-gold btn-lg" id="hero-order-btn">Order Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Signature Flavours Section -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <span class="section-eyebrow">Chef's Recommendations</span>
+        <h2 class="section-title">Signature Flavours</h2>
+        <p class="section-subtitle">
+          Handcrafted culinary icons that honour the rich spices of Madurai alongside beloved international gourmet favourites.
+        </p>
+      </div>
+
+      <div class="food-grid">
+        {% for dish in signature_dishes %}
+          <div class="food-card fade-in-up" id="dish-card-{{ dish.id }}">
+            <div class="food-card-img-wrap">
+              <img src="{{ dish.image }}" alt="{{ dish.name }}" loading="lazy">
+              <span class="food-diet-badge {{ dish.veg_or_nonveg }}" title="{{ dish.veg_or_nonveg|capitalize }}"></span>
+              <button class="food-fav-btn" onclick="toggleFavorite({{ dish.id }}, this)" title="Add to favorites">
+                ♡
+              </button>
+            </div>
+            <div class="food-card-body">
+              <span class="food-category-tag">{{ dish.category }}</span>
+              <h3 class="food-card-title">
+                <a href="{{ url_for('food_details', id=dish.id) }}">{{ dish.name }}</a>
+              </h3>
+              <p class="food-card-desc">{{ dish.description }}</p>
+              <div class="food-card-footer">
+                <span class="food-price">₹{{ "%.2f"|format(dish.price) }}</span>
+                <div class="food-actions">
+                  <a href="{{ url_for('food_details', id=dish.id) }}" class="btn btn-secondary btn-sm" style="padding: 7px 10px;">Details</a>
+                  <button class="add-cart-btn" onclick="addToCart({{ dish.id }})">
+                    <span>+ Add</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="{{ url_for('menu') }}" class="btn btn-dark btn-lg">View All 50 Menu Items →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section ("Where Madurai Meets the World") -->
+  <section class="section section-cream" id="about-preview">
+    <div class="container">
+      <div class="story-grid">
+        <div class="fade-in-up">
+          <span class="section-eyebrow">Heritage & Hospitality</span>
+          <h2 class="section-title" style="font-size: 2.8rem; margin-bottom: 20px;">Where Madurai Meets the World</h2>
+          <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 18px; color: var(--color-text-main);">
+            Nestled along Madakulam Main Road within the distinguished ambiance of Regency Madurai by GRT Hotels, <strong>Ahaaram Multi Cuisine Restaurant</strong> celebrates the sacred bond between food, community, and generous hospitality.
+          </p>
+          <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; color: var(--color-text-muted);">
+            From the bustling street kitchens of Madurai known for tender mutton kari dosas and fragrant Seeraga Samba dum biryanis, to the subtle nuances of continental herb grills and sizzlers, our kitchen crafts a welcoming sanctuary for every palate. Whether greeting the sunrise with our sumptuous breakfast buffet or gathering the family for an evening banquet, you will find an inviting table waiting.
+          </p>
+          <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <a href="{{ url_for('about') }}" class="btn btn-secondary">Read Our Story</a>
+            <a href="{{ url_for('reservation') }}" class="btn btn-primary">Book an Evening Table</a>
+          </div>
+        </div>
+
+        <div class="story-img-collage fade-in-up">
+          <div class="story-img-main">
+            <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80" alt="Ahaaram Dining Interior">
+          </div>
+          <div class="story-img-secondary">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Indian Spice Artistry">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cuisine Categories Section -->
+  <section class="section" id="categories-section">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <span class="section-eyebrow">A Taste For Every Preference</span>
+        <h2 class="section-title">Explore Our Cuisines</h2>
+        <p class="section-subtitle">
+          Ten thoughtfully curated culinary sections spanning classic regional recipes, tandoor specials, and international favourites.
+        </p>
+      </div>
+
+      <div class="category-grid">
+        {% for cat in categories %}
+          <div class="category-card fade-in-up" id="category-card-{{ cat.slug }}">
+            <div class="category-img-wrap">
+              <img src="{{ cat.image }}" alt="{{ cat.name }}" loading="lazy">
+            </div>
+            <div class="category-body">
+              <h3 class="category-name">{{ cat.name }}</h3>
+              <p class="category-desc">{{ cat.description }}</p>
+              <a href="{{ url_for('menu', category=cat.slug) }}" class="category-btn">
+                Explore Dishes <span>→</span>
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- Dining Experiences Section -->
+  <section class="section section-dark" id="dining-section">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <span class="section-eyebrow" style="color: var(--color-gold);">Hospitality in Every Hour</span>
+        <h2 class="section-title">Dining Experiences</h2>
+        <p class="section-subtitle">
+          Whether joining us for an energizing breakfast or hosting a corporate summit, every dining moment is elevated by gracious service.
+        </p>
+      </div>
+
+      <div class="dining-grid">
+        <div class="dining-card fade-in-up">
+          <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=700&q=80" alt="Breakfast Buffet" loading="lazy">
+          <div class="dining-overlay">
+            <h3 class="dining-title">Breakfast Buffet</h3>
+            <p class="dining-desc">Steaming degree filter coffee, crisp dosas from our live counters, and seasonal tropical fruits.</p>
+          </div>
+        </div>
+
+        <div class="dining-card fade-in-up">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=700&q=80" alt="Lunch Feasts" loading="lazy">
+          <div class="dining-overlay">
+            <h3 class="dining-title">Lunch Feasts</h3>
+            <p class="dining-desc">Authentic Madurai curries, Seeraga Samba biryanis, and extensive multi-course executive thalis.</p>
+          </div>
+        </div>
+
+        <div class="dining-card fade-in-up">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80" alt="Dinner by Candlelight" loading="lazy">
+          <div class="dining-overlay">
+            <h3 class="dining-title">Dinner & Sizzlers</h3>
+            <p class="dining-desc">Subdued warm lighting, live tandoor breads, pan-Asian noodles, and artisanal desserts like royal Jigarthanda.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="{{ url_for('dining') }}" class="btn btn-outline-gold btn-lg">Explore All Dining Formats</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews Section -->
+  <section class="section section-cream" id="reviews-section">
+    <div class="container">
+      <div class="section-header fade-in-up">
+        <span class="section-eyebrow">Guest Impressions</span>
+        <h2 class="section-title">Warm Words From Our Diners</h2>
+        <p class="section-subtitle">
+          Real experiences shared by local food connoisseurs, traveling families, and guests of Regency Madurai.
+        </p>
+      </div>
+
+      <div class="reviews-grid">
+        {% for rev in reviews %}
+          <div class="review-card fade-in-up">
+            <div class="review-stars">
+              {% for i in range(rev.rating) %}★{% endfor %}
+            </div>
+            <p class="review-quote">"{{ rev.review }}"</p>
+            <div class="review-author">{{ rev.customer_name }}</div>
+            <div class="review-date">Verified Diner</div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div style="text-align: center; margin-top: 36px;">
+        <a href="{{ url_for('reviews') }}" class="btn btn-secondary">Read More Reviews or Share Yours →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Location & Visit Section -->
+  <section class="section" id="location-preview">
+    <div class="container">
+      <div class="story-grid" style="align-items: center;">
+        <div class="fade-in-up">
+          <span class="section-eyebrow">Prime Madurai Location</span>
+          <h2 class="section-title">Visit Ahaaram</h2>
+          <p style="font-size: 1.05rem; margin-bottom: 24px; color: var(--color-text-main);">
+            Conveniently situated on Madakulam Main Road, near major transit hubs and Madurai's historic Meenakshi Amman Temple. Enjoy valet parking, quiet garden courtyards, and effortless accessibility.
+          </p>
+          <div style="background: var(--color-cream); padding: 24px; border-radius: var(--radius-md); margin-bottom: 28px; border-left: 4px solid var(--color-gold);">
+            <h4 style="font-size: 1.1rem; margin-bottom: 6px;">Ahaaram Multi Cuisine Restaurant</h4>
+            <p style="font-size: 0.92rem; color: var(--color-text-muted); margin-bottom: 10px;">
+              Madakulam Main Road, Madurai, Tamil Nadu 625003, India
+            </p>
+            <p style="font-size: 0.9rem;"><strong>Direct Line:</strong> +91 452 237 1155</p>
+          </div>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="tel:+914522371155" class="btn btn-primary">Call Now</a>
+            <a href="https://maps.google.com/?q=Regency+Madurai+by+GRT+Hotels" target="_blank" rel="noopener" class="btn btn-secondary">Get Directions</a>
+            <a href="{{ url_for('reservation') }}" class="btn btn-outline-gold">Reserve a Table</a>
+          </div>
+        </div>
+
+        <div class="fade-in-up" style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--color-cream-border);">
+          <img src="https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=800&q=80" 
+               alt="Ahaaram Madurai Evening Ambience" 
+               style="width: 100%; height: 380px; object-fit: cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

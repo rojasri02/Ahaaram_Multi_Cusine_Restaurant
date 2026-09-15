@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}Reserve a Table | Ahaaram Multi Cuisine Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section section-dark" style="padding: 60px 0; text-align: center;">
+    <div class="container">
+      <span class="section-eyebrow" style="color: var(--color-gold);">An Inviting Table</span>
+      <h1 class="section-title" style="color: #fff; margin-bottom: 12px;">Reserve Your Dining Table</h1>
+      <p style="color: #c9c4be; max-width: 620px; margin: 0 auto; font-size: 1.05rem;">
+        Experience seamless hospitality at Regency Madurai. Reserve your preferred seating for breakfast, leisurely lunches, or intimate dinners.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div class="cart-layout">
+        <!-- Reservation Form -->
+        <div class="form-card">
+          <form method="POST" action="{{ url_for('reservation') }}" id="reservation-form">
+            <h3 style="font-size: 1.3rem; margin-bottom: 24px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 12px;">
+              Table Booking Details
+            </h3>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="res_name">Guest Name *</label>
+                <input type="text" name="name" id="res_name" class="form-control" 
+                       value="{{ current_user.name if current_user else '' }}" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="res_phone">Contact Phone *</label>
+                <input type="tel" name="phone" id="res_phone" class="form-control" 
+                       value="{{ current_user.phone if current_user else '' }}" placeholder="+91 98765 43210" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="res_email">Email Address</label>
+              <input type="email" name="email" id="res_email" class="form-control" 
+                     value="{{ current_user.email if current_user else '' }}" placeholder="your.name@example.com">
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="res-date">Reservation Date *</label>
+                <input type="date" name="reservation_date" id="res-date" class="form-control" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="res_time">Time Slot *</label>
+                <select name="reservation_time" id="res_time" class="form-control" required>
+                  <option value="">Select Dining Time</option>
+                  <optgroup label="Breakfast Buffet">
+                    <option value="07:30 AM">07:30 AM</option>
+                    <option value="08:30 AM">08:30 AM</option>
+                    <option value="09:30 AM">09:30 AM</option>
+                  </optgroup>
+                  <optgroup label="Lunch Feasts">
+                    <option value="12:30 PM">12:30 PM</option>
+                    <option value="01:15 PM">01:15 PM</option>
+                    <option value="02:00 PM">02:00 PM</option>
+                    <option value="02:45 PM">02:45 PM</option>
+                  </optgroup>
+                  <optgroup label="Dinner & Sizzlers">
+                    <option value="07:00 PM">07:00 PM</option>
+                    <option value="07:45 PM">07:45 PM</option>
+                    <option value="08:30 PM">08:30 PM</option>
+                    <option value="09:15 PM">09:15 PM</option>
+                    <option value="10:00 PM">10:00 PM</option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="guests">Number of Guests *</label>
+                <select name="guests" id="guests" class="form-control" required>
+                  <option value="1">1 Person (Solo Dining)</option>
+                  <option value="2" selected>2 Persons (Duo)</option>
+                  <option value="3">3 Persons</option>
+                  <option value="4">4 Persons (Family Table)</option>
+                  <option value="5">5 Persons</option>
+                  <option value="6">6 Persons (Large Family)</option>
+                  <option value="8">8 Persons (Banquet Group)</option>
+                  <option value="10">10+ Persons (Celebration)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="seating_preference">Seating Preference</label>
+                <select name="seating_preference" id="seating_preference" class="form-control">
+                  <option value="Main Dining Hall" selected>Main Dining Hall</option>
+                  <option value="Courtyard View Table">Courtyard View Table</option>
+                  <option value="Private Family Enclave">Private Family Enclave</option>
+                  <option value="Quiet Corner Table">Quiet Corner Table</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="special_requests">Special Requests / Occasion</label>
+              <textarea name="special_requests" id="special_requests" rows="3" class="form-control" 
+                        placeholder="Celebrating a Birthday / Anniversary? Let us know about dietary restrictions, high chairs for infants, or flower arrangements."></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg" id="submit-reservation-btn">
+              Confirm Reservation Request
+            </button>
+          </form>
+        </div>
+
+        <!-- Right Side: Dining Guidelines -->
+        <div>
+          <div class="form-card" style="margin-bottom: 24px;">
+            <h3 style="font-size: 1.25rem; margin-bottom: 16px; color: var(--color-charcoal);">
+              Dining Information
+            </h3>
+            
+            <div style="font-size: 0.9rem; line-height: 1.6; color: var(--color-text-muted); margin-bottom: 18px;">
+              <p style="margin-bottom: 10px;"><strong>Dress Code:</strong> Smart Casual. Traditional Indian attire and formal wear are warmly welcomed.</p>
+              <p style="margin-bottom: 10px;"><strong>Grace Period:</strong> Tables are held for 15 minutes past the reserved arrival time before release.</p>
+              <p style="margin-bottom: 10px;"><strong>Group Bookings:</strong> For parties larger than 12 guests, please contact our Food & Beverage manager directly.</p>
+              <p><strong>Valet Service:</strong> Complimentary secure valet parking is provided at the hotel entrance.</p>
+            </div>
+
+            <div style="background: var(--color-cream); padding: 16px; border-radius: var(--radius-sm); border-left: 3px solid var(--color-gold);">
+              <h4 style="font-size: 0.95rem; margin-bottom: 4px;">Direct Desk Assistance</h4>
+              <p style="font-size: 0.88rem; margin: 0;">Call our dining concierge at <strong>+91 452 237 1155</strong></p>
+            </div>
+          </div>
+
+          {% if current_user %}
+            <div class="form-card" style="text-align: center;">
+              <h4 style="margin-bottom: 8px;">Manage Your Bookings</h4>
+              <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 16px;">
+                Review your upcoming table reservations or update previous dining requests.
+              </p>
+              <a href="{{ url_for('my_reservations') }}" class="btn btn-secondary btn-sm">View My Reservations</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

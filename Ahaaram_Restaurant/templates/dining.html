@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Dining Experiences | Ahaaram Multi Cuisine Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section section-dark" style="padding: 60px 0; text-align: center;">
+    <div class="container">
+      <span class="section-eyebrow" style="color: var(--color-gold);">Curated Moments</span>
+      <h1 class="section-title" style="color: #fff; margin-bottom: 12px;">Dining Experiences</h1>
+      <p style="color: #c9c4be; max-width: 650px; margin: 0 auto; font-size: 1.05rem;">
+        From sunrise breakfast spreads to festive family dinners, discover the varied rhythms of Ahaaram hospitality.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <!-- 1. Breakfast Buffet -->
+      <div class="story-grid" style="margin-bottom: 70px;">
+        <div class="fade-in-up">
+          <span class="section-eyebrow">07:00 AM – 10:30 AM</span>
+          <h2 class="section-title">The Grand Breakfast Buffet</h2>
+          <p style="font-size: 1.02rem; line-height: 1.7; color: var(--color-text-main); margin-bottom: 16px;">
+            Greet the dawn with authentic South Indian morning staples and international breakfast favourites. Our live counter chefs prepare crisp paper roast dosas, fluffy steamed Kanchipuram idlis, and golden medu vadas served alongside four handcrafted chutneys and piping hot sambar.
+          </p>
+          <ul style="list-style: none; padding-left: 0; margin-bottom: 24px; font-size: 0.92rem; color: var(--color-text-muted);">
+            <li style="margin-bottom: 8px;">✓ <strong>Live Dosa & Egg Stations:</strong> Customized to your exact preferences</li>
+            <li style="margin-bottom: 8px;">✓ <strong>Kumbakonam Degree Filter Coffee:</strong> Poured in traditional brass davarah</li>
+            <li style="margin-bottom: 8px;">✓ <strong>Continental Spread:</strong> Fresh pastries, croissants, cereal, and fruit juices</li>
+          </ul>
+          <a href="{{ url_for('reservation') }}" class="btn btn-primary">Book Breakfast Table</a>
+        </div>
+        <div class="fade-in-up" style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md);">
+          <img src="https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?auto=format&fit=crop&w=800&q=80" alt="Breakfast Buffet" style="width: 100%; height: 380px; object-fit: cover;">
+        </div>
+      </div>
+
+      <!-- 2. Lunch Feasts -->
+      <div class="story-grid" style="margin-bottom: 70px;">
+        <div class="fade-in-up" style="order: 2;">
+          <span class="section-eyebrow">12:30 PM – 03:30 PM</span>
+          <h2 class="section-title">Royal Afternoon Feasts</h2>
+          <p style="font-size: 1.02rem; line-height: 1.7; color: var(--color-text-main); margin-bottom: 16px;">
+            Afternoons at Ahaaram are a celebration of Madurai's culinary abundance. Indulge in authentic Seeraga Samba Mutton Dum Biryani, fragrant Chettinad Kozhi curries, or traditional multi-course vegetarian banana-leaf meals.
+          </p>
+          <ul style="list-style: none; padding-left: 0; margin-bottom: 24px; font-size: 0.92rem; color: var(--color-text-muted);">
+            <li style="margin-bottom: 8px;">✓ <strong>Executive Business Thali:</strong> Rapid, refined, and comprehensive for professionals</li>
+            <li style="margin-bottom: 8px;">✓ <strong>Clay Oven Tandoor:</strong> Fresh garlic naans, tandoori rotis, and smoked paneer tikka</li>
+            <li style="margin-bottom: 8px;">✓ <strong>Asian Bowls:</strong> Quick wok noodles and fragrant Thai curries</li>
+          </ul>
+          <a href="{{ url_for('reservation') }}" class="btn btn-primary">Reserve Lunch Table</a>
+        </div>
+        <div class="fade-in-up" style="order: 1; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md);">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=800&q=80" alt="Lunch Feasts" style="width: 100%; height: 380px; object-fit: cover;">
+        </div>
+      </div>
+
+      <!-- 3. Dinner & Sizzlers -->
+      <div class="story-grid">
+        <div class="fade-in-up">
+          <span class="section-eyebrow">07:00 PM – 11:00 PM</span>
+          <h2 class="section-title">Evening Dining & Sizzlers</h2>
+          <p style="font-size: 1.02rem; line-height: 1.7; color: var(--color-text-main); margin-bottom: 16px;">
+            As twilight settles over Madurai, Ahaaram transforms into an intimate, warm setting illuminated by amber glow and gentle instrumental melodies. Savour sizzling cast-iron platters, buttery Madurai bun parottas, rich gravies, and exquisite artisanal desserts.
+          </p>
+          <ul style="list-style: none; padding-left: 0; margin-bottom: 24px; font-size: 0.92rem; color: var(--color-text-muted);">
+            <li style="margin-bottom: 8px;">✓ <strong>Signature Sizzlers:</strong> Smoky cottage cheese or grilled chicken platters</li>
+            <li style="margin-bottom: 8px;">✓ <strong>Famous Madurai Bun Parotta:</strong> Flaky, buttery, paired with mutton salna</li>
+            <li style="margin-bottom: 8px;">✓ <strong>Dessert Finale:</strong> Royal Madurai Jigarthanda and warm Gulab Jamun</li>
+          </ul>
+          <a href="{{ url_for('reservation') }}" class="btn btn-primary">Reserve Evening Table</a>
+        </div>
+        <div class="fade-in-up" style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-md);">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Dinner Dining" style="width: 100%; height: 380px; object-fit: cover;">
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Manage Menu Items | Ahaaram Admin{% endblock %}
+
+{% block admin_content %}
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="section-eyebrow">Menu Catalog</span>
+      <h1 style="font-size: 2rem;">Manage Food Items ({{ foods|length }})</h1>
+    </div>
+    <a href="{{ url_for('admin_add_food') }}" class="btn btn-primary">+ Add New Dish</a>
+  </div>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Dish</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Price</th>
+          <th>Availability</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for food in foods %}
+          <tr>
+            <td>
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <img src="{{ food.image }}" alt="{{ food.name }}" style="width: 44px; height: 44px; border-radius: 6px; object-fit: cover;">
+                <div>
+                  <div style="font-weight: 600; color: var(--color-charcoal);">{{ food.name }}</div>
+                  <div style="font-size: 0.78rem; color: var(--color-text-muted); max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                    {{ food.description }}
+                  </div>
+                </div>
+              </div>
+            </td>
+            <td>{{ food.category }}</td>
+            <td>
+              <span class="food-diet-badge {{ food.veg_or_nonveg }}" style="position: static; display: inline-flex;"></span>
+              <span style="font-size: 0.8rem; margin-left: 4px;">{{ food.veg_or_nonveg|capitalize }}</span>
+            </td>
+            <td><strong>₹{{ "%.2f"|format(food.price) }}</strong></td>
+            <td>
+              {% if food.availability == 1 %}
+                <span class="status-badge status-ready">Available</span>
+              {% else %}
+                <span class="status-badge status-cancelled">Sold Out</span>
+              {% endif %}
+            </td>
+            <td>
+              <div style="display: flex; gap: 8px;">
+                <a href="{{ url_for('admin_edit_food', id=food.id) }}" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-size: 0.78rem;">
+                  Edit
+                </a>
+                <form method="POST" action="{{ url_for('admin_delete_food', id=food.id) }}" onsubmit="return confirm('Are you sure you want to remove {{ food.name }} from the menu?');" style="display: inline;">
+                  <button type="submit" class="btn btn-secondary btn-sm" style="padding: 4px 10px; font-size: 0.78rem; color: #c62828; border-color: #ef9a9a;">
+                    Delete
+                  </button>
+                </form>
+              </div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

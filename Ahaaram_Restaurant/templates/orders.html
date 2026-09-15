@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}My Orders | Ahaaram Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <span class="section-eyebrow">Order History</span>
+          <h1 style="font-size: 2.2rem;">Your Dining & Delivery Orders</h1>
+        </div>
+        <a href="{{ url_for('menu') }}" class="btn btn-primary btn-sm">+ Place New Order</a>
+      </div>
+
+      {% if orders_with_items %}
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          {% for entry in orders_with_items %}
+            {% set order = entry.order %}
+            {% set items = entry.order_items %}
+            <div class="form-card" style="padding: 24px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 16px; margin-bottom: 18px; flex-wrap: wrap; gap: 12px;">
+                <div>
+                  <span style="font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em;">Order #</span>
+                  <span style="font-size: 1.15rem; font-weight: 700; color: var(--color-charcoal); margin-left: 6px;">{{ order.order_number }}</span>
+                  <div style="font-size: 0.82rem; color: var(--color-text-muted); margin-top: 4px;">Placed on: {{ order.created_at }}</div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 14px;">
+                  <span class="status-badge status-{{ order.status|lower }}">{{ order.status }}</span>
+                  <span style="font-size: 1.25rem; font-weight: 700; color: var(--color-gold);">
+                    ₹{{ "%.2f"|format(order.grand_total) }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Details Grid -->
+              <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;" class="orders-grid">
+                <div>
+                  <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--color-charcoal);">Dishes:</h4>
+                  <ul style="list-style: none; padding-left: 0; font-size: 0.9rem;">
+                    {% for item in items %}
+                      <li style="margin-bottom: 6px; display: flex; justify-content: space-between;">
+                        <span>• {{ item.quantity }}x <strong>{{ item.food_name }}</strong></span>
+                        <span style="color: var(--color-text-muted);">₹{{ "%.2f"|format(item.price * item.quantity) }}</span>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+
+                <div style="border-left: 1px solid var(--color-cream-border); padding-left: 20px; font-size: 0.86rem; color: var(--color-text-muted);">
+                  <p style="margin-bottom: 6px;"><strong style="color: var(--color-charcoal);">Recipient:</strong> {{ order.customer_name }}</p>
+                  <p style="margin-bottom: 6px;"><strong style="color: var(--color-charcoal);">Phone:</strong> {{ order.customer_phone }}</p>
+                  <p style="margin-bottom: 6px;"><strong style="color: var(--color-charcoal);">Dining Mode:</strong> <span style="text-transform: capitalize;">{{ order.dining_type }}</span></p>
+                  <p style="margin-bottom: 6px;"><strong style="color: var(--color-charcoal);">Address:</strong> {{ order.delivery_address }}</p>
+                  <p style="margin-bottom: 6px;"><strong style="color: var(--color-charcoal);">Payment:</strong> {{ order.payment_method }}</p>
+                </div>
+              </div>
+
+              <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--color-cream-border); display: flex; justify-content: flex-end; gap: 12px;">
+                <a href="{{ url_for('order_success', order_number=order.order_number) }}" class="btn btn-secondary btn-sm">View Receipt & Tracker</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="form-card" style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 3rem; margin-bottom: 16px;">🍽️</div>
+          <h2 style="font-size: 1.6rem; margin-bottom: 10px;">No Orders Placed Yet</h2>
+          <p style="color: var(--color-text-muted); max-width: 440px; margin: 0 auto 24px auto;">
+            You have not placed any orders with us yet. Browse our multi-cuisine menu to order authentic delicacies to your table or doorstep.
+          </p>
+          <a href="{{ url_for('menu') }}" class="btn btn-primary">Explore Menu & Order</a>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

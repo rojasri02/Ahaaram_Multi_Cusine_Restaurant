@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout | Ahaaram Multi Cuisine Restaurant{% endblock %}
+
+{% block content %}
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <h1 style="font-size: 2.4rem; margin-bottom: 24px;">Confirm Your Order</h1>
+
+      <div class="cart-layout">
+        <!-- Left: Delivery & Billing Form -->
+        <div class="form-card">
+          <form method="POST" action="{{ url_for('checkout') }}" id="checkout-form">
+            <h3 style="font-size: 1.3rem; margin-bottom: 20px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              1. Delivery & Contact Details
+            </h3>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="customer_name">Full Name *</label>
+                <input type="text" name="customer_name" id="customer_name" class="form-control" 
+                       value="{{ current_user.name if current_user else '' }}" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="customer_phone">Phone Number *</label>
+                <input type="tel" name="customer_phone" id="customer_phone" class="form-control" 
+                       value="{{ current_user.phone if current_user else '' }}" placeholder="+91 98765 43210" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="customer_email">Email Address</label>
+              <input type="email" name="customer_email" id="customer_email" class="form-control" 
+                     value="{{ current_user.email if current_user else '' }}" placeholder="your.name@example.com">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="delivery_address">Delivery Address or Room / Table No. *</label>
+              <textarea name="delivery_address" id="delivery_address" rows="3" class="form-control" 
+                        placeholder="House / Flat / Hotel Room No., Landmark, Madakulam / Madurai locality" required>{{ current_user.address if current_user else '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="order_notes">Culinary Notes / Special Instructions</label>
+              <input type="text" name="order_notes" id="order_notes" class="form-control" 
+                     placeholder="e.g. Medium spice, extra green chutney, no plastic cutlery">
+            </div>
+
+            <h3 style="font-size: 1.3rem; margin-top: 32px; margin-bottom: 20px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              2. Payment Mode
+            </h3>
+
+            <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;">
+              <label style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 1px solid var(--color-cream-border); border-radius: var(--radius-sm); cursor: pointer; background: var(--color-ivory);">
+                <input type="radio" name="payment_method" value="Cash on Delivery" checked>
+                <div>
+                  <strong>Cash on Delivery / Pay at Table</strong>
+                  <div style="font-size: 0.82rem; color: var(--color-text-muted);">Pay in cash or card when your food arrives.</div>
+                </div>
+              </label>
+
+              <label style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 1px solid var(--color-cream-border); border-radius: var(--radius-sm); cursor: pointer; background: var(--color-ivory);">
+                <input type="radio" name="payment_method" value="UPI / QR Code (Demo)">
+                <div>
+                  <strong>UPI / QR Pay (Instant Confirmation)</strong>
+                  <div style="font-size: 0.82rem; color: var(--color-text-muted);">Pay using Google Pay, PhonePe, or Paytm UPI (Demo Simulator).</div>
+                </div>
+              </label>
+
+              <label style="display: flex; align-items: center; gap: 12px; padding: 14px 18px; border: 1px solid var(--color-cream-border); border-radius: var(--radius-sm); cursor: pointer; background: var(--color-ivory);">
+                <input type="radio" name="payment_method" value="Credit / Debit Card (Demo)">
+                <div>
+                  <strong>Credit / Debit Card (Demo)</strong>
+                  <div style="font-size: 0.82rem; color: var(--color-text-muted);">Visa, MasterCard, or RuPay card payment.</div>
+                </div>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full btn-lg" id="place-order-submit-btn">
+              Complete Order (₹{{ "%.2f"|format(totals.grand_total) }})
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Order Overview -->
+        <div class="cart-summary-card">
+          <h3 style="font-size: 1.25rem; margin-bottom: 16px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+            Order Overview ({{ cart|length }} items)
+          </h3>
+
+          <div style="max-height: 320px; overflow-y: auto; margin-bottom: 20px;">
+            {% for id_str, item in cart.items() %}
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.9rem;">
+                <div>
+                  <span style="font-weight: 600;">{{ item.quantity }}x</span> {{ item.name }}
+                </div>
+                <div style="font-weight: 600;">₹{{ "%.2f"|format(item.price * item.quantity) }}</div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="summary-row">
+            <span>Subtotal</span>
+            <span>₹{{ "%.2f"|format(totals.subtotal) }}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Restaurant GST (5%)</span>
+            <span>₹{{ "%.2f"|format(totals.tax) }}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Delivery Fee</span>
+            <span>
+              {% if totals.delivery_fee == 0 %}
+                <strong style="color: var(--color-veg);">FREE</strong>
+              {% else %}
+                ₹{{ "%.2f"|format(totals.delivery_fee) }}
+              {% endif %}
+            </span>
+          </div>
+
+          <div class="summary-row total">
+            <span>Grand Total</span>
+            <span style="color: var(--color-gold);">₹{{ "%.2f"|format(totals.grand_total) }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

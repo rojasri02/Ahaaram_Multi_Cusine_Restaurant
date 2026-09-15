@@ -1,0 +1,41 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Customers Directory | Ahaaram Admin{% endblock %}
+
+{% block admin_content %}
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="section-eyebrow">Guest Profiles</span>
+      <h1 style="font-size: 2rem;">Customer Directory ({{ customers|length }})</h1>
+    </div>
+  </div>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Contact Email</th>
+          <th>Phone</th>
+          <th>Orders Placed</th>
+          <th>Table Bookings</th>
+          <th>Registered Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for cust in customers %}
+          <tr>
+            <td><strong>#USR-{{ cust.id }}</strong></td>
+            <td><strong>{{ cust.name }}</strong></td>
+            <td>{{ cust.email }}</td>
+            <td>{{ cust.phone or '—' }}</td>
+            <td><span class="status-badge status-ready">{{ cust.order_count }} orders</span></td>
+            <td><span class="status-badge status-preparing">{{ cust.reservation_count }} bookings</span></td>
+            <td style="font-size: 0.82rem; color: var(--color-text-muted);">{{ cust.created_at }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

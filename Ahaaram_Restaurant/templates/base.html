@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Ahaaram Multi Cuisine Restaurant | Madurai{% endblock %}</title>
+  <meta name="description" content="Ahaaram Multi Cuisine Restaurant at Madakulam Main Road, Madurai. Associated with Regency Madurai by GRT Hotels. Authentic South Indian delicacies, North Indian curries, Asian wok dishes, and Continental fare.">
+  
+  <!-- Open Graph Metadata -->
+  <meta property="og:title" content="Ahaaram Multi Cuisine Restaurant | Madakulam, Madurai">
+  <meta property="og:description" content="Discover thoughtfully prepared flavours and warm hospitality in Madurai. Multi-cuisine dining, table reservations, and seamless online ordering.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80">
+
+  <!-- Favicon / Logo -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="container">
+      <div>
+        <span>📍 Madakulam Main Road, Madurai, Tamil Nadu</span>
+        <span style="margin: 0 10px; opacity: 0.4;">|</span>
+        <span>🏨 Regency Madurai by GRT Hotels</span>
+      </div>
+      <div class="top-bar-links">
+        <span>⏰ 07:00 AM – 11:00 PM</span>
+        <a href="tel:+914522371155">📞 Call: +91 452 237 1155</a>
+        {% if current_user and current_user.is_admin %}
+          <a href="{{ url_for('admin_dashboard') }}" style="color: var(--color-gold); font-weight: 700;">★ Admin Portal</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="{{ url_for('index') }}" class="nav-brand" id="brand-logo">
+        <span class="nav-logo-title">Ahaaram</span>
+        <span class="nav-logo-subtitle">Multi Cuisine Restaurant</span>
+      </a>
+
+      <nav>
+        <ul class="nav-menu" id="primary-nav">
+          <li><a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">Home</a></li>
+          <li><a href="{{ url_for('about') }}" class="nav-link {% if request.endpoint == 'about' %}active{% endif %}">About</a></li>
+          <li><a href="{{ url_for('menu') }}" class="nav-link {% if request.endpoint == 'menu' %}active{% endif %}">Menu</a></li>
+          <li><a href="{{ url_for('gallery') }}" class="nav-link {% if request.endpoint == 'gallery' %}active{% endif %}">Gallery</a></li>
+          <li><a href="{{ url_for('dining') }}" class="nav-link {% if request.endpoint == 'dining' %}active{% endif %}">Dining</a></li>
+          <li><a href="{{ url_for('reviews') }}" class="nav-link {% if request.endpoint == 'reviews' %}active{% endif %}">Reviews</a></li>
+          <li><a href="{{ url_for('contact') }}" class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Table Reservation CTA -->
+        <a href="{{ url_for('reservation') }}" class="btn btn-outline-gold btn-sm" id="nav-reserve-btn">Reserve Table</a>
+
+        <!-- Cart Icon -->
+        <a href="{{ url_for('cart') }}" class="cart-icon-btn" id="nav-cart-btn" title="View Cart">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-badge" style="display: {% if cart_count > 0 %}flex{% else %}none{% endif %};">{{ cart_count }}</span>
+        </a>
+
+        <!-- User Authentication State -->
+        {% if current_user %}
+          <div class="user-dropdown">
+            <div class="user-btn" id="user-menu-trigger">
+              <span>👤 {{ current_user.name.split(' ')[0] }}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </div>
+            <div class="user-menu">
+              <a href="{{ url_for('profile') }}">Customer Dashboard</a>
+              <a href="{{ url_for('orders') }}">My Orders</a>
+              <a href="{{ url_for('my_reservations') }}">My Reservations</a>
+              {% if current_user.is_admin %}
+                <div class="user-menu-divider"></div>
+                <a href="{{ url_for('admin_dashboard') }}" style="color: var(--color-gold); font-weight: 600;">Admin Dashboard</a>
+              {% endif %}
+              <div class="user-menu-divider"></div>
+              <a href="{{ url_for('logout') }}" style="color: #c62828;">Sign Out</a>
+            </div>
+          </div>
+        {% else %}
+          <a href="{{ url_for('login') }}" class="btn btn-secondary btn-sm" id="nav-login-btn">Sign In</a>
+        {% endif %}
+
+        <!-- Mobile hamburger -->
+        <button class="nav-toggle" aria-label="Toggle navigation" id="nav-toggle-btn">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Flash Notification Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="alerts-container">
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <span>{{ message }}</span>
+            <button onclick="this.parentElement.remove()" style="background:none; border:none; cursor:pointer; font-size:1.1rem; color:inherit;">×</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Page Content -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Premium Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>AHAARAM</h3>
+          <p style="color: var(--color-gold); font-weight: 600; font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 14px;">MULTI CUISINE RESTAURANT</p>
+          <p style="margin-bottom: 16px; line-height: 1.6;">
+            Where Madurai meets the world. Experience the finest South Indian specialties, rich North Indian curries, delicate Asian wok dishes, and wholesome Continental fare.
+          </p>
+          <p style="font-size: 0.85rem; color: #a39e97;">
+            Associated with <strong>Regency Madurai by GRT Hotels</strong>.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Quick Links</h4>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('index') }}">Home</a></li>
+            <li><a href="{{ url_for('about') }}">About Ahaaram</a></li>
+            <li><a href="{{ url_for('menu') }}">Explore Menu</a></li>
+            <li><a href="{{ url_for('gallery') }}">Photo Gallery</a></li>
+            <li><a href="{{ url_for('dining') }}">Dining Experiences</a></li>
+            <li><a href="{{ url_for('reservation') }}">Reserve a Table</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Customer Care</h4>
+          <ul class="footer-links">
+            <li><a href="{{ url_for('orders') }}">Order Tracking</a></li>
+            <li><a href="{{ url_for('my_reservations') }}">My Reservations</a></li>
+            <li><a href="{{ url_for('reviews') }}">Guest Testimonials</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact & Directions</a></li>
+            <li><a href="{{ url_for('login') }}">Guest Login</a></li>
+            <li><a href="{{ url_for('admin_login') }}">Management Portal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-title">Visit Us</h4>
+          <p style="margin-bottom: 8px;">📍 Madakulam Main Road, Madurai, Tamil Nadu, India – 625003</p>
+          <p style="margin-bottom: 8px;">📞 +91 452 237 1155</p>
+          <p style="margin-bottom: 16px;">✉️ reservations@ahaarammadurai.com</p>
+          <h5 style="color: #ffffff; font-size: 0.9rem; margin-bottom: 8px;">Dining Hours</h5>
+          <p style="font-size: 0.85rem;">Breakfast: 07:00 AM – 10:30 AM<br>Lunch: 12:30 PM – 03:30 PM<br>Dinner: 07:00 PM – 11:00 PM</p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © {{ now.year }} Ahaaram Multi Cuisine Restaurant. All rights reserved.
+        </div>
+        <div style="font-size: 0.78rem; color: #8e8a84;">
+          * Note: Unverified dishes and sample reviews are designated demo data for demonstration purposes.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>

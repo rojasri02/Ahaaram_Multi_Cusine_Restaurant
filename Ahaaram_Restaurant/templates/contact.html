@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Contact & Directions | Ahaaram Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section section-dark" style="padding: 60px 0; text-align: center;">
+    <div class="container">
+      <span class="section-eyebrow" style="color: var(--color-gold);">Get In Touch</span>
+      <h1 class="section-title" style="color: #fff; margin-bottom: 12px;">Contact & Location</h1>
+      <p style="color: #c9c4be; max-width: 620px; margin: 0 auto; font-size: 1.05rem;">
+        Located at Regency Madurai on Madakulam Main Road. We are always ready to welcome your inquiries and reservations.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div class="cart-layout">
+        <!-- Contact Information Cards -->
+        <div>
+          <div class="form-card" style="margin-bottom: 24px;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 18px; color: var(--color-charcoal);">
+              Ahaaram Multi Cuisine Restaurant
+            </h3>
+
+            <div style="font-size: 0.95rem; line-height: 1.7; color: var(--color-text-main); margin-bottom: 24px;">
+              <p style="margin-bottom: 12px;">
+                <strong>Address:</strong><br>
+                Regency Madurai by GRT Hotels<br>
+                Madakulam Main Road, Madurai,<br>
+                Tamil Nadu, India – 625003
+              </p>
+              <p style="margin-bottom: 12px;">
+                <strong>Telephone Reservations:</strong><br>
+                <a href="tel:+914522371155" style="color: var(--color-gold); font-weight: 600;">+91 452 237 1155</a>
+              </p>
+              <p style="margin-bottom: 12px;">
+                <strong>Direct Email:</strong><br>
+                <a href="mailto:reservations@ahaarammadurai.com" style="color: var(--color-charcoal); text-decoration: underline;">reservations@ahaarammadurai.com</a>
+              </p>
+            </div>
+
+            <div style="background: var(--color-cream); padding: 18px; border-radius: var(--radius-sm); border-left: 3px solid var(--color-gold);">
+              <h4 style="font-size: 0.92rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">Dining Timings</h4>
+              <p style="font-size: 0.88rem; margin-bottom: 4px;"><strong>Breakfast:</strong> 07:00 AM – 10:30 AM</p>
+              <p style="font-size: 0.88rem; margin-bottom: 4px;"><strong>Lunch:</strong> 12:30 PM – 03:30 PM</p>
+              <p style="font-size: 0.88rem; margin: 0;"><strong>Dinner:</strong> 07:00 PM – 11:00 PM</p>
+            </div>
+          </div>
+
+          <!-- Location Map Placeholder Card -->
+          <div class="form-card" style="padding: 0; overflow: hidden;">
+            <div style="height: 240px; background: #e0deda; position: relative;">
+              <iframe 
+                width="100%" 
+                height="100%" 
+                frameborder="0" 
+                scrolling="no" 
+                marginheight="0" 
+                marginwidth="0" 
+                src="https://maps.google.com/maps?q=Regency%20Madurai%20by%20GRT%20Hotels%20Madakulam%20Madurai&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                style="border:0;"
+                title="Location Map">
+              </iframe>
+            </div>
+            <div style="padding: 18px; display: flex; justify-content: space-between; align-items: center; background: #fff;">
+              <span style="font-size: 0.85rem; color: var(--color-text-muted);">Valet Parking Available at Entrance</span>
+              <a href="https://maps.google.com/?q=Regency+Madurai+by+GRT+Hotels" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Get Directions</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Message Form -->
+        <div>
+          <div class="form-card">
+            <h3 style="font-size: 1.3rem; margin-bottom: 16px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              Send an Inquiry
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 22px;">
+              For private events, banquet hall bookings, or general dining inquiries, please send us a message below.
+            </p>
+
+            <form method="POST" action="{{ url_for('contact') }}">
+              <div class="form-group">
+                <label class="form-label" for="c_name">Full Name *</label>
+                <input type="text" name="name" id="c_name" class="form-control" 
+                       value="{{ current_user.name if current_user else '' }}" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="c_email">Email Address *</label>
+                <input type="email" name="email" id="c_email" class="form-control" 
+                       value="{{ current_user.email if current_user else '' }}" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="c_phone">Phone Number</label>
+                <input type="tel" name="phone" id="c_phone" class="form-control" 
+                       value="{{ current_user.phone if current_user else '' }}" placeholder="+91 98765 43210">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="c_subject">Subject *</label>
+                <input type="text" name="subject" id="c_subject" class="form-control" 
+                       placeholder="e.g. Birthday Celebration / Corporate Banquet / Catering" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="c_msg">Your Message *</label>
+                <textarea name="message" id="c_msg" rows="4" class="form-control" 
+                          placeholder="Provide details about dates, anticipated guest counts, or specific requirements..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

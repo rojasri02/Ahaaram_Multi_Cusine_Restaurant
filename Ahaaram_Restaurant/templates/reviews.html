@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Guest Reviews | Ahaaram Multi Cuisine Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section section-dark" style="padding: 60px 0; text-align: center;">
+    <div class="container">
+      <span class="section-eyebrow" style="color: var(--color-gold);">Guest Testimonials</span>
+      <h1 class="section-title" style="color: #fff; margin-bottom: 12px;">What Our Diners Say</h1>
+      <p style="color: #c9c4be; max-width: 650px; margin: 0 auto; font-size: 1.05rem;">
+        Reflections from travellers, food enthusiasts, and families who have shared a meal with us at Madakulam.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <div class="cart-layout">
+        <!-- Left: Reviews Grid -->
+        <div>
+          <div style="margin-bottom: 24px;">
+            <h2 style="font-size: 1.6rem;">Guest Feedback ({{ reviews|length }})</h2>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+            {% for rev in reviews %}
+              <div class="review-card">
+                <div class="review-stars">
+                  {% for i in range(rev.rating) %}★{% endfor %}
+                  {% for i in range(5 - rev.rating) %}☆{% endfor %}
+                </div>
+                <p class="review-quote">"{{ rev.review }}"</p>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--color-cream-border); padding-top: 12px;">
+                  <div class="review-author">{{ rev.customer_name }}</div>
+                  <div class="review-date">{{ rev.created_at }}</div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+
+        <!-- Right: Submit a Review Form -->
+        <div>
+          <div class="form-card">
+            <h3 style="font-size: 1.3rem; margin-bottom: 16px; border-bottom: 1px solid var(--color-cream-border); padding-bottom: 10px;">
+              Share Your Dining Experience
+            </h3>
+            <p style="font-size: 0.88rem; color: var(--color-text-muted); margin-bottom: 20px;">
+              Dined with us recently? We appreciate your honest thoughts and recommendations.
+            </p>
+
+            <form method="POST" action="{{ url_for('reviews') }}">
+              <div class="form-group">
+                <label class="form-label" for="rev_name">Your Name *</label>
+                <input type="text" name="customer_name" id="rev_name" class="form-control" 
+                       value="{{ current_user.name if current_user else '' }}" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="rev_rating">Rating *</label>
+                <select name="rating" id="rev_rating" class="form-control" required>
+                  <option value="5" selected>★★★★★ - Exceptional (5 Stars)</option>
+                  <option value="4">★★★★☆ - Very Good (4 Stars)</option>
+                  <option value="3">★★★☆☆ - Good (3 Stars)</option>
+                  <option value="2">★★☆☆☆ - Fair (2 Stars)</option>
+                  <option value="1">★☆☆☆☆ - Poor (1 Star)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="rev_text">Your Review *</label>
+                <textarea name="review" id="rev_text" rows="4" class="form-control" 
+                          placeholder="Tell us about the dishes you ordered, service quality, and overall atmosphere..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-full">Submit Review</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

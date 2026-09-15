@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Photo Gallery | Ahaaram Multi Cuisine Restaurant Madurai{% endblock %}
+
+{% block content %}
+  <section class="section section-dark" style="padding: 60px 0; text-align: center;">
+    <div class="container">
+      <span class="section-eyebrow" style="color: var(--color-gold);">Visual Impressions</span>
+      <h1 class="section-title" style="color: #fff; margin-bottom: 12px;">Restaurant & Food Gallery</h1>
+      <p style="color: #c9c4be; max-width: 600px; margin: 0 auto; font-size: 1.05rem;">
+        Take a glimpse inside our refined dining hall, live culinary counters, and artisanal multi-cuisine presentations.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 40px;">
+    <div class="container">
+      <!-- Filter Bar -->
+      <div class="gallery-filter-bar">
+        <button type="button" class="filter-pill active gallery-filter-btn" data-filter="all">All Photos</button>
+        <button type="button" class="filter-pill gallery-filter-btn" data-filter="ambience">Ambience & Interior</button>
+        <button type="button" class="filter-pill gallery-filter-btn" data-filter="indian">Indian Classics</button>
+        <button type="button" class="filter-pill gallery-filter-btn" data-filter="international">Asian & Continental</button>
+        <button type="button" class="filter-pill gallery-filter-btn" data-filter="desserts">Desserts & Beverages</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="gallery-grid">
+        <!-- Ambience 1 -->
+        <div class="gallery-item" data-category="ambience">
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80" alt="Main Dining Hall" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Main Dining Hall</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Spacious, Warm, and Elegant</span>
+          </div>
+        </div>
+
+        <!-- Indian 1 -->
+        <div class="gallery-item" data-category="indian">
+          <img src="https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=800&q=80" alt="South Indian Kari Dosa Feast" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Madurai Kari Dosa</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Traditional Heritage Recipe</span>
+          </div>
+        </div>
+
+        <!-- International 1 -->
+        <div class="gallery-item" data-category="international">
+          <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=800&q=80" alt="Asian Wok Noodles" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">High-Heat Asian Wok</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Fresh Seasonal Greens & Sauces</span>
+          </div>
+        </div>
+
+        <!-- Ambience 2 -->
+        <div class="gallery-item" data-category="ambience">
+          <img src="https://images.unsplash.com/photo-1550966871-3ed3cdb5ed0c?auto=format&fit=crop&w=800&q=80" alt="Private Enclave Seating" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Intimate Enclave Seating</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Regency Madurai by GRT Hotels</span>
+          </div>
+        </div>
+
+        <!-- Indian 2 -->
+        <div class="gallery-item" data-category="indian">
+          <img src="https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=800&q=80" alt="Tandoori Platters & Breads" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Live Clay Tandoor</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Smoked Kebabs & Naans</span>
+          </div>
+        </div>
+
+        <!-- International 2 -->
+        <div class="gallery-item" data-category="international">
+          <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80" alt="Pan-Seared Salmon" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Continental Herb Grills</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Pan-Seared Atlantic Salmon</span>
+          </div>
+        </div>
+
+        <!-- Desserts 1 -->
+        <div class="gallery-item" data-category="desserts">
+          <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=800&q=80" alt="Royal Madurai Jigarthanda" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Royal Madurai Jigarthanda</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Almond Gum & Condensed Milk</span>
+          </div>
+        </div>
+
+        <!-- Ambience 3 -->
+        <div class="gallery-item" data-category="ambience">
+          <img src="https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?auto=format&fit=crop&w=800&q=80" alt="Evening Outdoor Courtyard" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Courtyard Garden View</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Twilight Hospitality</span>
+          </div>
+        </div>
+
+        <!-- Desserts 2 -->
+        <div class="gallery-item" data-category="desserts">
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80" alt="Degree Filter Coffee" loading="lazy">
+          <div class="gallery-item-overlay">
+            <h4 style="font-size: 1.2rem; margin-bottom: 4px; color: #fff;">Kumbakonam Degree Coffee</h4>
+            <span style="font-size: 0.8rem; color: var(--color-gold);">Served in Brass Davarah</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox Modal -->
+  <div class="lightbox-modal" id="gallery-lightbox">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close">&times;</button>
+      <img src="" alt="Enlarged View" id="lightbox-img">
+      <div id="lightbox-caption" style="color: #fff; text-align: center; margin-top: 14px; font-size: 1.1rem; font-family: var(--font-serif);"></div>
+    </div>
+  </div>
+{% endblock %}

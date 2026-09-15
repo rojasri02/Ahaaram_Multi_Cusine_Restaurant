@@ -1,0 +1,95 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}Manage Orders | Ahaaram Admin{% endblock %}
+
+{% block admin_content %}
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="section-eyebrow">Kitchen & Delivery Logistics</span>
+      <h1 style="font-size: 2rem;">Orders Master ({{ orders_data|length }})</h1>
+    </div>
+    <!-- Filter status -->
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+      <a href="{{ url_for('admin_orders') }}" class="btn btn-sm {% if not selected_status %}btn-primary{% else %}btn-secondary{% endif %}">All</a>
+      <a href="{{ url_for('admin_orders', status='Pending') }}" class="btn btn-sm {% if selected_status == 'Pending' %}btn-primary{% else %}btn-secondary{% endif %}">Pending</a>
+      <a href="{{ url_for('admin_orders', status='Preparing') }}" class="btn btn-sm {% if selected_status == 'Preparing' %}btn-primary{% else %}btn-secondary{% endif %}">Preparing</a>
+      <a href="{{ url_for('admin_orders', status='Ready') }}" class="btn btn-sm {% if selected_status == 'Ready' %}btn-primary{% else %}btn-secondary{% endif %}">Ready</a>
+      <a href="{{ url_for('admin_orders', status='Completed') }}" class="btn btn-sm {% if selected_status == 'Completed' %}btn-primary{% else %}btn-secondary{% endif %}">Completed</a>
+      <a href="{{ url_for('admin_orders', status='Cancelled') }}" class="btn btn-sm {% if selected_status == 'Cancelled' %}btn-primary{% else %}btn-secondary{% endif %}">Cancelled</a>
+    </div>
+  </div>
+
+  <div class="data-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Order Ref</th>
+          <th>Customer Details</th>
+          <th>Dishes Ordered</th>
+          <th>Total (₹)</th>
+          <th>Type & Payment</th>
+          <th>Status</th>
+          <th>Update Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if orders_data %}
+          {% for entry in orders_data %}
+            {% set order = entry.order %}
+            {% set itms = entry.order_items %}
+            <tr>
+              <td>
+                <strong>{{ order.order_number }}</strong>
+                <div style="font-size: 0.78rem; color: var(--color-text-muted);">{{ order.created_at }}</div>
+              </td>
+              <td>
+                <div style="font-weight: 600;">{{ order.customer_name }}</div>
+                <div style="font-size: 0.82rem; color: var(--color-text-muted);">{{ order.customer_phone }}</div>
+                <div style="font-size: 0.78rem; color: #888; max-width: 220px;">{{ order.delivery_address }}</div>
+                {% if order.special_instructions %}
+                  <div style="font-size: 0.75rem; color: var(--color-gold); margin-top: 2px;">Note: {{ order.special_instructions }}</div>
+                {% endif %}
+              </td>
+              <td>
+                <ul style="list-style: none; padding-left: 0; font-size: 0.85rem;">
+                  {% for itm in itms %}
+                    <li>{{ itm.quantity }}x {{ itm.food_name }} (₹{{ "%.2f"|format(itm.price) }})</li>
+                  {% endfor %}
+                </ul>
+              </td>
+              <td>
+                <strong style="color: var(--color-gold); font-size: 1.05rem;">
+                  ₹{{ "%.2f"|format(order.grand_total) }}
+                </strong>
+                <div style="font-size: 0.72rem; color: var(--color-text-muted);">Incl. 5% GST</div>
+              </td>
+              <td>
+                <div style="font-weight: 600; text-transform: capitalize;">{{ order.dining_type }}</div>
+                <div style="font-size: 0.8rem; color: var(--color-text-muted);">{{ order.payment_method }}</div>
+              </td>
+              <td>
+                <span class="status-badge status-{{ order.status|lower }}">{{ order.status }}</span>
+              </td>
+              <td>
+                <form method="POST" action="{{ url_for('admin_update_order_status', id=order.id) }}" style="display: flex; gap: 6px;">
+                  <select name="status" class="form-control" style="padding: 5px 8px; font-size: 0.8rem; width: auto;">
+                    <option value="Pending" {% if order.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Preparing" {% if order.status == 'Preparing' %}selected{% endif %}>Preparing</option>
+                    <option value="Ready" {% if order.status == 'Ready' %}selected{% endif %}>Ready</option>
+                    <option value="Completed" {% if order.status == 'Completed' %}selected{% endif %}>Completed</option>
+                    <option value="Cancelled" {% if order.status == 'Cancelled' %}selected{% endif %}>Cancelled</option>
+                  </select>
+                  <button type="submit" class="btn btn-secondary btn-sm" style="padding: 4px 8px; font-size: 0.75rem;">Save</button>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td colspan="7" style="text-align: center; padding: 30px; color: var(--color-text-muted);">No orders in this view.</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
