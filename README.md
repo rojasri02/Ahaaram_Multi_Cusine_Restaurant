@@ -1,71 +1,171 @@
-# Ahaaram Multi Cuisine Restaurant – Madakulam, Madurai
+🍽️ Ahaaram Multi Cuisine Restaurant
 
-> **Luxury, Warm & Elegant Full-Stack Restaurant Web Application & Platform**  
-> Associated with **Regency Madurai by GRT Hotels**  
-> Location: *Madakulam Main Road, Madurai, Tamil Nadu, India*
+A full-stack restaurant web application developed for Ahaaram Multi Cuisine Restaurant, Madakulam, Madurai. The application provides a visually engaging restaurant experience with food browsing, customer interactions, reservations, orders, and database-backed restaurant management features.
 
----
+✨ Features
 
-## 🌟 Executive Summary
+- 🏠 Attractive restaurant homepage
+- 🍴 Multi-cuisine food menu with 50 food items
+- 🔍 Food browsing and menu interaction
+- 🛒 Order management
+- 📅 Table reservation functionality
+- ⭐ Customer reviews and feedback
+- 👤 User registration and login
+- 🗄️ SQLite database integration
+- 👨‍💼 Restaurant/admin management features
+- 📱 Responsive web interface
+- 🎨 Modern restaurant-themed UI
+- ⚡ React-based frontend
+- 🐍 Flask backend API/application
 
-**Ahaaram Multi Cuisine Restaurant** is a production-grade, full-stack restaurant platform combining a **luxurious public website** with a **comprehensive digital web application**. Designed around the hospitality heritage of Madurai and GRT Hotels, the application features an authentic warm luxury aesthetic (rich gold, deep charcoal, warm ivory, and subtle cream) with rich interactivity, complete ordering workflows, table booking lifecycle management, customer accounts, and an executive administration portal.
+🛠️ Technologies Used
 
-> **Data Integrity Notice:**  
-> In adherence to verification guidelines, official hotel claims, awards, and reviews are strictly kept to verified facts. Where third-party or proprietary specifics cannot be verified, clearly marked **demo/sample data** is provided for full functional demonstration.
+Frontend
 
----
+- React
+- TypeScript
+- HTML5
+- CSS3
+- Vite
 
-## 🏆 Key Features
+Backend
 
-### 1. Public Restaurant Website
-- **Grand Hero Presentation:** Immersive welcome with Madurai cultural motifs, opening hours, direct reservation booking, and menu exploration.
-- **Our Story ("Where Madurai Meets the World"):** The culinary philosophy combining temple city heritage, Chettinad spice mastery, and international cuisine.
-- **Dining Experiences:** Curated dining formats including the *Grand Breakfast Buffet*, *Royal Afternoon Feasts*, and *Evening Dining & Sizzlers*.
-- **Interactive Menu:** 50 multi-cuisine dishes across 10 categories with real-time text search, vegetarian/non-vegetarian filter pills, category tabs, and price sorting.
-- **Signature Dish Showcases:** Highlighting iconic culinary gems such as *Madurai Kari Dosa*, *Seeraga Samba Mutton Dum Biryani*, and *Royal Madurai Jigarthanda*.
-- **Interactive Lightbox Photo Gallery:** High-resolution categorized imagery (Restaurant, Food, Ambience, Desserts, Beverages) with full-screen lightbox navigation.
-- **Verified Guest Testimonials:** 5-star review carousel with guest review submission form.
-- **Location, Map & Directions:** Regency Madurai location details, phone reservation helpline, opening schedules, and interactive Google Map iframe.
+- Python
+- Flask
 
-### 2. Functional Restaurant Web Application
-- **AJAX Shopping Cart:** Instant slide-in flyout drawer, quantity increment/decrement, 5% Restaurant GST calculation, delivery thresholds, and live badge updates.
-- **Checkout & Order Flow:** Choice of Dine-In, Takeaway, or Doorstep Delivery, custom instructions, and transparent bill calculation.
-- **Order Success & Tracking:** Dedicated receipt view with live order progress status bar (*Received → Preparing → Ready → Delivered*).
-- **Table Reservation System:** Multi-party table bookings with preferred meal slot, party size, seating preference, and instant reference ID generation.
-- **Customer Profiles & Bookmarks:** Customer authentication (registration & sign-in), saved favourite dishes list with 1-click cart addition, order history, and booking tracking.
-- **Executive Administration Console:**
-  - Real-time KPI analytics (Revenue, Order volume, Pending orders, Reservations, Customers).
-  - Food Catalog management (Add, Edit, Delete dishes, toggle stock availability, feature signature items).
-  - Order Processing queue with dynamic status updates (*Pending*, *Preparing*, *Ready*, *Completed*, *Cancelled*).
-  - Table Reservation master schedule with status management.
-  - Customer directory with historical order & booking statistics.
-  - Review moderation.
+Database
 
----
+- SQLite
 
-## 🔑 Demo & Test Credentials
+Development Tools
 
-For effortless evaluation, quick auto-fill buttons are provided on the login page:
+- Visual Studio Code
+- Git
+- GitHub
+- npm
+- Python
 
-| Role | Email | Password | Access Level |
-| :--- | :--- | :--- | :--- |
-| **Administrator** | `admin@ahaaram.com` | `admin123` | Full Admin Console (`/admin`) |
-| **Customer Guest** | `customer@ahaaram.com` | `customer123` | Customer Portal (`/profile`, `/orders`) |
-| **Secondary Demo** | `guest@ahaaram.com` | `guest123` | Customer Portal (`/profile`, `/orders`) |
+📂 Project Structure
 
----
+Ahaaram_Multi_Cusine_Restaurant/
+│
+├── Ahaaram_Restaurant/
+│   ├── database/
+│   ├── static/
+│   ├── templates/
+│   ├── app.py
+│   ├── requirements.txt
+│   ├── test_app.py
+│   └── README.md
+│
+├── src/
+│   ├── components/
+│   ├── pages/
+│   └── ...
+│
+├── index.html
+├── package.json
+├── package-lock.json
+├── server.ts
+├── tsconfig.json
+├── vite.config.ts
+├── metadata.json
+├── .env.example
+└── README.md
 
-## 🚀 Running the Application & Test Suite
+🚀 How to Run the Project
 
-### 1. Launch the Web Application
-```bash
+1. Clone the Repository
+
+git clone https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant.git
+
+2. Open the Project
+
+cd Ahaaram_Multi_Cusine_Restaurant
+
+3. Install Frontend Dependencies
+
+npm install
+
+4. Install Backend Dependencies
+
 cd Ahaaram_Restaurant
-python3 app.py
-```
-*Access the site at `http://localhost:5000` (or `PORT` specified in environment).*
+python -m pip install -r requirements.txt
 
-### 2. Execute Automated End-to-End Tests
-```bash
-python3 Ahaaram_Restaurant/test_app.py
-```
-All 9 end-to-end integration and acceptance tests verify database seeding, page rendering, menu queries, AJAX cart operations, checkout, table reservations, customer accounts, and administrative CRUD operations.
+5. Start the Flask Backend
+
+python app.py
+
+The backend will run at:
+
+http://127.0.0.1:5000
+
+Open the address in your browser to access the application.
+
+🗄️ Database
+
+The application uses SQLite for storing restaurant-related data.
+
+The database supports application data such as:
+
+- Food/menu information
+- User information
+- Orders
+- Reservations
+- Reviews and feedback
+- Restaurant management data
+
+The application initializes the required database and seed data when the backend is started.
+
+🎯 Project Objective
+
+The main objective of this project is to develop a complete restaurant web application that combines an attractive user interface with a Python Flask backend and SQLite database.
+
+It demonstrates the practical use of frontend development, backend development, database management, API/application integration, and full-stack web development.
+
+🔮 Future Enhancements
+
+- 💳 Online payment integration
+- 📍 Google Maps/location integration
+- 📧 Email confirmation for reservations and orders
+- 📱 Progressive Web App support
+- 🤖 AI-powered food recommendations
+- 📊 Advanced admin analytics dashboard
+- 🔔 Real-time order notifications
+- ☁️ Cloud deployment
+
+📸 Screenshots
+
+Screenshots of the application can be added here:
+
+Home Page
+Menu Page
+Food Details
+Reservation Page
+Order Page
+Admin Dashboard
+
+«Add your project screenshots to a "screenshots/" folder and link them here.»
+
+👩‍💻 Developer
+
+Rojasri K
+
+B.Tech Information Technology Student
+KLN College of Engineering
+Aspiring Machine Learning Engineer
+
+Skills
+
+"Python" "Java" "C" "C++" "SQL" "HTML" "CSS" "React" "TypeScript" "Flask" "SQLite"
+
+Connect With Me
+
+- GitHub: https://github.com/rojasri02
+- LinkedIn: Add your LinkedIn profile URL here
+
+---
+
+⭐ If you find this project useful, consider giving the repository a star!
+
+© 2026 Rojasri K. All Rights Reserved.
