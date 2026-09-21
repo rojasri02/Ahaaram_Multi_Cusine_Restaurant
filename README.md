@@ -412,7 +412,7 @@ The complete project documentation is available here:
 
 📘 **Ahaaram Multi Cuisine Restaurant Project Report**
 
-`YOUR_GOOGLE_DRIVE_PROJECT_REPORT_LINK`
+"https://drive.google.com/file/d/1zh8gjGsrqjr5Ui_VQhu1TCfKCCOL4ik2/view?usp=sharing"
 
 The report contains:
 
@@ -444,7 +444,7 @@ The research paper for this project is available here:
 
 📄 **Ahaaram Multi Cuisine Restaurant – Research Paper**
 
-`YOUR_GOOGLE_DRIVE_RESEARCH_PAPER_LINK`
+"https://drive.google.com/file/d/1Y4E1Yh2wzV85pBk8uYoPQgF7tHrhheHt/view?usp=sharing"
 
 The paper discusses:
 
@@ -466,7 +466,7 @@ The paper discusses:
 
 **Project Poster**
 
-`YOUR_GOOGLE_DRIVE_PROJECT_POSTER_LINK`
+"https://drive.google.com/file/d/1zh8gjGsrqjr5Ui_VQhu1TCfKCCOL4ik2/view?usp=sharing"
 
 ---
 
@@ -666,7 +666,7 @@ The main objectives of this project are:
 
 B.Tech Information Technology Student
 
-Aspiring Software Developer
+Aspiring Machine Learning Engineer
 
 ---
 
