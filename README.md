@@ -530,7 +530,7 @@ Ahaaram-Multi-Cuisine-Restaurant/
 ### 1. Clone the Repository
 
 ```bash
-git clone YOUR_GITHUB_REPOSITORY_LINK
+git clone https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant.git
 ```
 
 ### 2. Navigate to the Project Folder
