@@ -306,93 +306,63 @@ The application contains the following main pages:
 
 ### 🏠 Home Page
 
-**Home Page**
-
-Add the Home Page screenshot here.
+"Home Page"()
 
 ### 🍴 Menu Page
 
-**Menu**
-
-Add the Menu Page screenshot here.
+"Menu"()
 
 ### 📋 Food Details
 
-**Food Details**
-
-Add the Food Details screenshot here.
+"Food Details"()
 
 ### 🛒 Shopping Cart
 
-**Shopping Cart**
-
-Add the Cart screenshot here.
+"Shopping Cart"()
 
 ### 💳 Checkout
 
-**Checkout**
-
-Add the Checkout screenshot here.
+"Checkout"()
 
 ### 📦 Order Success
 
-**Order Success**
-
-Add the Order Success screenshot here.
+"Order Success"()
 
 ### 🪑 Table Reservation
 
-**Table Reservation**
-
-Add the Reservation screenshot here.
+"Table Reservation"()
 
 ### 👤 Customer Profile
 
-**Customer Profile**
-
-Add the Profile screenshot here.
+"Customer Profile"()
 
 ### 📦 Order History
 
-**Order History**
-
-Add the Orders screenshot here.
+"Order History"()
 
 ### 📅 Reservation History
 
-**Reservation History**
-
-Add the My Reservations screenshot here.
+"Reservation History"()
 
 ### ⭐ Reviews
 
-**Reviews**
-
-Add the Reviews screenshot here.
+"Reviews"()
 
 ### 🛠️ Admin Dashboard
 
-**Admin Dashboard**
-
-Add the Admin Dashboard screenshot here.
+"Admin Dashboard"()
 
 ### 🍴 Food Management
 
-**Food Management**
-
-Add the Food Management screenshot here.
+"Food Management"()
 
 ### 📦 Order Management
 
-**Order Management**
-
-Add the Admin Orders screenshot here.
+"Order Management"()
 
 ### 🪑 Reservation Management
 
-**Reservation Management**
-
-Add the Admin Reservations screenshot here.
+"Reservation Management"()
 
 ---
 
@@ -402,7 +372,7 @@ Watch the complete project demonstration:
 
 **▶️ Watch Ahaaram Multi Cuisine Restaurant Demo**
 
-`YOUR_GOOGLE_DRIVE_DEMO_VIDEO_LINK`
+()
 
 ---
 
