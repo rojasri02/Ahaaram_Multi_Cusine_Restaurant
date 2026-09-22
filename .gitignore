@@ -1,14 +1,40 @@
-node_modules/
-build/
-dist/
-coverage/
-.DS_Store
-*.log
-.env*
-!.env.example
-node_modules/
-.env
+# Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Environment variables
+.env
+.env.*
+
+# Flask
+instance/
+
+# SQLite database
 *.db
+*.sqlite
+*.sqlite3
+
+# Uploaded files
+uploads/
+static/uploads/
+
+# IDE / VS Code
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
