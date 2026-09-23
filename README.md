@@ -306,59 +306,59 @@ The application contains the following main pages:
 
 ### 🏠 Home Page
 
-"Home Page"()
+"Home Page"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/Menu%20page%202.png)
 
 ### 🍴 Menu Page
 
-"Menu"()
+"Menu"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/Food%20details%20page%203.png)
 
 ### 📋 Food Details
 
-"Food Details"()
+"Food Details"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/checkout%20page%205.png)
 
 ### 🛒 Shopping Cart
 
-"Shopping Cart"()
+"Shopping Cart"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/shopping%20cart%20page%204.png)
 
 ### 💳 Checkout
 
-"Checkout"()
+"Checkout"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/checkout%20page%205.png)
 
 ### 📦 Order Success
 
-"Order Success"()
+"Order Success"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/order%20access%206.png)
 
 ### 🪑 Table Reservation
 
-"Table Reservation"()
+"Table Reservation"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/Table%20reservation%207.png)
 
 ### 👤 Customer Profile
 
-"Customer Profile"()
+"Customer Profile"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/customer%20profile%208.png)
 
 ### 📦 Order History
 
-"Order History"()
+"Order History"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/ordered%20history%209.png)
 
 ### 📅 Reservation History
 
-"Reservation History"()
+"Reservation History"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/Reservation%20history%2010.png)
 
 ### ⭐ Reviews
 
-"Reviews"()
+"Reviews"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/Reviews%2011.png)
 
 ### 🛠️ Admin Dashboard
 
-"Admin Dashboard"()
+"Admin Dashboard"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/Admin%20dashboard%2012.png)
 
 ### 🍴 Food Management
 
-"Food Management"()
+"Food Management"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/food%20management%20admin%20%2013.png)
 
 ### 📦 Order Management
 
-"Order Management"()
+"Order Management"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/order%20management%20admin%2014.png)
 
 ### 🪑 Reservation Management
 
