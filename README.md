@@ -362,7 +362,7 @@ The application contains the following main pages:
 
 ### 🪑 Reservation Management
 
-"Reservation Management"()
+"Reservation Management"(https://github.com/rojasri02/Ahaaram_Multi_Cusine_Restaurant/blob/main/ahaaram-multi-cuisine-reastuatant/Reservation%20management%20admin%2015.png)
 
 ---
 
